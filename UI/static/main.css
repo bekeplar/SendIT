@@ -1,0 +1,47 @@
+body {
+    font-size: 14px;
+    font-family:  Helvetica, sans-serif;
+    background-color: #e6e6e6;
+    min-width: 1047px;
+}
+
+.Judo{
+    display: block;
+    padding-left: 35em;
+    padding-right: 12em;
+    padding-top: 12em;
+    padding-bottom: 10em;
+    font-weight: 700;
+   background-color: blue;
+   margin-left: 55px;
+   margin-right: 55px;
+   border-radius: 15px;
+}
+form {
+    padding-right: 10em;
+    
+}
+
+input{
+    width: 100%;
+    background-color: antiquewhite;
+    padding: 12px 20px;
+    align-content: center;
+    border-radius: 15px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+h3{
+    font-family: Cambria, Cochin, Georgia;
+    text-align: center;
+    text-decoration-color:greenyellow; 
+}
+button{
+    border-radius: 15px;
+    padding: 12px 20px;
+    text-align: center;
+    width: 50%;
+    display: inline-block;
+    font-size: 16px;
+
+} 
