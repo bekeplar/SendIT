@@ -27,4 +27,21 @@ SendIT is a courier service that helps users deliver parcels to different destin
 - The user gets real-time email notification when Admin changes the status of their parcel.
 
 - The user gets real-time email notification when Admin changes the present location their parcel.
+
+# Lunguage:
+
+Html
+
+CSS
+
+Javascript
+
+# Author:
+
+Bekalaze Joseph
+
+# Courtesy of:
+
+Andela  Bootcamp
+
  
