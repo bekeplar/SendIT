@@ -1,18 +1,54 @@
 body {
     font-size: 14px;
     font-family:  Helvetica, sans-serif;
+    background: url("../static/images/delivery.jpg");
+    background-size: cover;
+    background-repeat:no-repeat; 
     background-color: #e6e6e6;
-    min-width: 1047px;
+    min-width: 1042px;
+
 }
 
+#landing{
+    padding-top: 1em;
+    color: rgb(179, 240, 13);
+    font-size: 2em;
+    background: url("../static/images/parcel.jpg");
+    background-size: cover;
+    background-repeat:no-repeat; 
+    font-family: -apple-system;
+}
+footer li {
+    list-style: none;
+    display: inline;
+    align-items: center;
+   
+}
+footer ul li a{
+   color: aqua;
+
+    
+}
+h1{
+    color: #1c1ce2;
+    font-size: 3em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h2{
+    color: rgb(179, 240, 13);
+    text-align: center;
+    font-weight: bold;
+    font-size: 2em;
+    font-family: 'Times New Roman', Times, serif
+}
 .Judo{
     display: block;
-    padding-left: 35em;
+    padding-left: 21em;
     padding-right: 12em;
-    padding-top: 12em;
-    padding-bottom: 10em;
+    padding-top: 3em;
+    padding-bottom: 3em;
     font-weight: 700;
-   background-color: blue;
    margin-left: 55px;
    margin-right: 55px;
    border-radius: 15px;
@@ -24,24 +60,22 @@ form {
 
 input{
     width: 100%;
-    background-color: antiquewhite;
+    background-color: white;
     padding: 12px 20px;
     align-content: center;
     border-radius: 15px;
-    margin: 8px 0;
+
     box-sizing: border-box;
 }
 h3{
     font-family: Cambria, Cochin, Georgia;
     text-align: center;
-    text-decoration-color:greenyellow; 
 }
 button{
     border-radius: 15px;
-    padding: 12px 20px;
+    padding: 12px 2px;
     text-align: center;
-    width: 50%;
-    display: inline-block;
+    width: 55%;
     font-size: 16px;
 
 } 
@@ -55,3 +89,25 @@ legend {
     float: center;
 }
 
+#TD{
+    display: block;
+    padding-left: 35em;
+    padding-right: 12em;
+    padding-top: 12em;
+    padding-bottom: 10em;
+    font-weight: 700;
+   background-color: #1c1ce2 ;
+   margin-left: 55px;
+   margin-right: 55px;
+   border-radius: 15px;
+    
+}
+.me{
+    width: 50%;
+    background-color: antiquewhite;
+    padding: 12px 20px;
+    align-content: center;
+    border-radius: 15px;
+    margin: 8px 0;
+    box-sizing: border-box; 
+}
