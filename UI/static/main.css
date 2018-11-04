@@ -18,17 +18,23 @@ body {
     background-repeat:no-repeat; 
     font-family: -apple-system;
 }
+footer{
+    padding-bottom: 40%;
+}
 footer li {
     list-style: none;
-    display: inline;
     align-items: center;
+    display: inline ;
+    padding-top: 20%;
    
 }
 footer ul li a{
-   color: aqua;
-
-    
+   color: yellow;
+   font-size: 2em;
+   text-decoration: none;
+   padding: 10px;  
 }
+
 h1{
     color: #1c1ce2;
     font-size: 3em;
@@ -60,7 +66,7 @@ form {
 
 input{
     width: 100%;
-    background-color: white;
+    background-color: rgb(211, 208, 208);
     padding: 12px 20px;
     align-content: center;
     border-radius: 15px;
@@ -83,6 +89,8 @@ button{
 legend {
     text-align: center;
     font-style: italic;
+    font-size: 2em;
+    color: aqua;
     
 }
 #history{
@@ -90,16 +98,7 @@ legend {
 }
 
 #TD{
-    display: block;
-    padding-left: 35em;
-    padding-right: 12em;
-    padding-top: 12em;
-    padding-bottom: 10em;
-    font-weight: 700;
-   background-color: #1c1ce2 ;
-   margin-left: 55px;
-   margin-right: 55px;
-   border-radius: 15px;
+    
     
 }
 .me{
@@ -111,3 +110,13 @@ legend {
     margin: 8px 0;
     box-sizing: border-box; 
 }
+
+#left{
+   float: right;
+   font-size: 2em;
+   padding-right: 10%;
+}
+#left a{
+    color: aqua;
+    text-decoration: none;
+} 
