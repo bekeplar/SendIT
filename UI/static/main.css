@@ -111,12 +111,12 @@ legend {
     box-sizing: border-box; 
 }
 
-#left{
+.left{
    float: right;
    font-size: 2em;
    padding-right: 10%;
 }
-#left a{
+.left a{
     color: aqua;
     text-decoration: none;
 } 
