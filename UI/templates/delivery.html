@@ -8,44 +8,62 @@
             <title>Create Order.</title>
         </head>
     <body>
+            <div class="order">
             <h1>SendIT</h1>
 
-        <h2>Convinient, timely and fast delivery</h2>
+        <h2>Convenient, timely and fast delivery</h2>
         <h2>Create A SendIT Order</h2>
         <div class="left">
         <a  href="index.html">Logout</a>
        </div> 
            <form class="Judo">
             <div>
-                    <legend>Your Information</legend><br>
+                    <h3>Your Information</h3><br>
                     <label>
-                            First Name: 
+                           <h4> First Name:</h4>
                             <input type="text" placeholder="Joseph">
                     </label><br><br>
                     <label>
-                            Last Name:
+                           <h4>Last Name:</h4>
                             <input type="text" placeholder="Bekalaze">
                     </label><br><br>
                     <label>
-                            Phone Number:
+                        <h4>Phone Number:</h4>
                             <input type="text" placeholder="+256 999 555 5555" required>
                     </label><br><br>
             
                     <label> 
-                            Destination:
+                        <h4>Destination:</h4>
                             <input type="text" placeholder="Bukoto-street plot-112">
                     </label><br><br>
                     <label> 
-                        Return Destination:
+                        <h3>Return Destination:</h3>
                         <input type="text" placeholder="Bukoto-street plot-112">
                 </label>
                     <h3>
                         <legend>
-                                check price:
+                                <div id="price">
+                                   <span>check price:</span>
+                                   <div id="content">
+                                           <table>
+                                                   <th>Distance</th>
+                                                   <th>Weight</th>
+                                                   <th>Price</th>
+                                                  <tr>
+                                                         <td>< 5km</td>
+                                                         <td><10kg</td>
+                                                         <td>6USD</td>
+        
+                                                  </tr>
+                                           </table>
+                                   </div>
+                                </div>
+                                
                         </legend>    
-                            <a href="price.html">Pricing.</a>
+                            
                         </h3>
                         <button type="submit">Create Order</button> 
-            </div> 
+            </div>
+        </div> 
     </body>
 </html>    
