@@ -1,0 +1,270 @@
+body {
+    font-size: 14px;
+    font-family:  Helvetica, sans-serif;
+    background: url("../static/images/right.jpg" );
+    background-size: cover;
+    filter: grayscale(10%);
+    background-repeat:no-repeat; 
+    
+    min-width: 1042px;
+}
+
+.landing{
+    padding-top: 10%;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-bottom: 10%;
+    color: white;
+    font-size: 2em; 
+    font-family: -apple-system;
+}
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+     .landing{
+        font-size: 2em;
+        padding-top: 10%;
+        padding-left: 5%;
+        padding-right: 50%;
+        padding-bottom: 5%;
+    }
+}
+
+header{
+    padding-bottom: 40%;
+}
+a:hover { 
+    color:green;
+}
+select{
+    color: #555;
+    font-size: inherit;
+    margin: 0;
+    font-size: 1em;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    background-color: yellow;
+    white-space: nowrap;
+    border: 1px solid rgb(224, 221, 221);
+    border-radius: 6px;
+}
+button:hover{
+    background-color: #1c1ce2;
+}
+header{
+    float: left;
+}
+header li {
+    list-style: none;
+    align-items: center;
+    display: inline ;
+    padding-top: 20%;
+   
+}
+header ul li a{
+   color:aqua;
+   font-size: 2em;
+   text-decoration: none;
+   padding: 10px;  
+}
+
+h1{
+    color: #1c1ce2;
+    font-size: 3em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+h4{
+    color: rgb(10, 156, 15);
+    font-size: 2em;
+}
+h2{
+    color: rgb(242, 243, 242);
+    font-style: italic;
+    font-weight: 320;
+    filter: contrast(150%);
+    text-align: center;
+    font-size: 2em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.Judo{
+    display: block;
+    padding-left: 21em;
+    padding-right: 12em;
+    padding-top: 3em;
+    padding-bottom: 3em;
+    font-weight: 700;
+   margin-left: 55px;
+   margin-right: 55px;
+   border-radius: 15px;
+}
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .Judo{
+        padding-left: 10em;
+        padding-right: 9em;
+        padding-top: 2em;
+        padding-bottom: 2em;
+        font-weight: 500;
+        margin-left: 25px;
+        margin-right: 25px;
+        border-radius: 8px;
+    }
+}
+#lower1 {
+    padding-bottom: 30%;
+}
+
+#lower a:hover { 
+    color:green;
+}    
+
+#lower   a{
+    display: inline;
+    margin: .5em;
+    text-decoration: none;
+    font-size: 2em;
+    color: rgb(238, 238, 236);
+}
+
+#lower1 {
+    float: right;
+    color: #fcfbf3;
+}
+form {
+    padding-right: 10em;
+    
+}
+
+input{
+    width: 100%;
+    background-color: rgb(245, 245, 245);
+    padding: 12px 20px;
+    align-content: center;
+    border-radius: 15px;
+    box-sizing: border-box;
+}
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    input {
+        width: 100%;
+        border-radius: 8px;
+    }
+}
+h3{
+    font-family: Cambria, Cochin, Georgia;
+    text-align: center;
+    font-size: 2em;
+    color:white;
+}
+button{
+    border-radius: 15px;
+    padding: 12px 2px;
+    text-align: center;
+    width: 35%;
+    font-size: 16px;
+
+} 
+
+legend {
+    text-align: center;
+    font-style: italic;
+    font-size: 1em;
+    color: aqua;   
+}
+
+#TD{
+    
+    
+}
+.me{
+    width: 50%;
+    background-color: antiquewhite;
+    padding: 12px 20px;
+    align-content: center;
+    border-radius: 15px;
+    margin: 8px 0;
+    box-sizing: border-box; 
+}
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .me {
+        width: 50%;
+        padding: 6px 10px;
+        margin: 4px 0;
+    }
+}
+
+.left{
+   float: right;
+   font-size: 2em;
+   padding-right: 10%;
+}
+.left a{
+    color: aqua;
+    text-decoration: none;
+} 
+.left a:hover{
+    color: green;
+} 
+.price{
+    color: green;
+    font-size: 2em;
+} 
+.price:hover #content{
+    display: block;
+   
+} 
+#content{
+    display: none;
+    position: absolute;
+} 
+.hello{
+    padding-left: 20%;
+    padding-right: 20%;
+} 
+#pick{
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-bottom: 10%;
+    
+}
+
+table{
+    border: 1px solid white;
+    border-collapse: collapse;
+    
+}
+table th{
+    border: 1px solid white;
+    text-align: center;
+    height: 50px;
+    
+}
+table td{
+    border: 1px solid white;
+    text-align: center;
+    height: 70px;
+}
+th, td{
+    padding: 15px;
+}
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+tr:hover {
+    background-color: #f5e72c;
+}
+th:hover {
+    background-color: #4f52ff;
+}
+#bek{
+    padding-left: 20%;
+    padding-right: 20%;
+}
+#history button{
+    padding-left: 20%;
+
+}
