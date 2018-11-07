@@ -9,7 +9,7 @@ body {
     min-width: 1042px;
 }
 
-#landing{
+.landing{
     padding-top: 10%;
     padding-left: 20%;
     padding-right: 20%;
@@ -17,6 +17,16 @@ body {
     color: white;
     font-size: 2em; 
     font-family: -apple-system;
+}
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+     .landing{
+        font-size: 2em;
+        padding-top: 10%;
+        padding-left: 5%;
+        padding-right: 50%;
+        padding-bottom: 5%;
+    }
 }
 
 header{
@@ -86,6 +96,39 @@ h2{
    margin-right: 55px;
    border-radius: 15px;
 }
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .Judo{
+        padding-left: 10em;
+        padding-right: 9em;
+        padding-top: 2em;
+        padding-bottom: 2em;
+        font-weight: 500;
+        margin-left: 25px;
+        margin-right: 25px;
+        border-radius: 8px;
+    }
+}
+#lower1 {
+    padding-bottom: 30%;
+}
+
+#lower a:hover { 
+    color:green;
+}    
+
+#lower   a{
+    display: inline;
+    margin: .5em;
+    text-decoration: none;
+    font-size: 2em;
+    color: rgb(238, 238, 236);
+}
+
+#lower1 {
+    float: right;
+    color: #fcfbf3;
+}
 form {
     padding-right: 10em;
     
@@ -97,8 +140,14 @@ input{
     padding: 12px 20px;
     align-content: center;
     border-radius: 15px;
-
     box-sizing: border-box;
+}
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    input {
+        width: 100%;
+        border-radius: 8px;
+    }
 }
 h3{
     font-family: Cambria, Cochin, Georgia;
@@ -135,6 +184,14 @@ legend {
     margin: 8px 0;
     box-sizing: border-box; 
 }
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .me {
+        width: 50%;
+        padding: 6px 10px;
+        margin: 4px 0;
+    }
+}
 
 .left{
    float: right;
@@ -148,9 +205,13 @@ legend {
 .left a:hover{
     color: green;
 } 
-#price:hover #content{
+.price{
+    color: green;
+    font-size: 2em;
+} 
+.price:hover #content{
     display: block;
-    background-color: #1c1ce2;
+   
 } 
 #content{
     display: none;
@@ -192,6 +253,12 @@ th {
 }
 tr:nth-child(even) {
     background-color: #f2f2f2;
+}
+tr:hover {
+    background-color: #f5e72c;
+}
+th:hover {
+    background-color: #4f52ff;
 }
 #bek{
     padding-left: 20%;

@@ -9,9 +9,6 @@
         </head>
     <body> 
             <h1>SendIT</h1>
-            <div class="left">
-                    <a  href="index.html">Logout</a>
-            </div> 
             <h2>Convinient, timely and fast delivery</h2>
             <div id="DT">
                 <label>
@@ -43,16 +40,45 @@
                    <h3>change destination</h3> 
                 <label>
                      <input class="me" type="text" name="destination">
+                     <button type="button">Save</button>
                 </label>
             </div>
-            <div id="history">
-                    <label>
-                            <h3>Past Orders
-                            <p>Number of orders: 1</p> 
-                            </h3>
-                    </label>
-                           <button type="button">display all details</button>
+            <legend>
+              <div class="price">
+                 <span>Your Order History :</span>
+                 <div id="content">
+                   Number of orders: 2
+                         <table>
+                                 <th>order-Name</th>
+                                 <th>Distance</th>
+                                 <th>Weight</th>
+                                 <th>Price</th>
+                                 <th>Destination</th>
+                                 <th>Status</th>
+                                <tr>
+                                       <td>alpha</td> 
+                                       <td>< 5km</td>
+                                       <td><10kg</td>
+                                       <td>6USD</td>
+                                       <td>Mukono</td>
+                                       <td>Delivered</td>
+                                </tr>
+                                <tr>
+                                    <td>Bingo</td> 
+                                    <td>< 10km</td>
+                                    <td><10kg</td>
+                                    <td>9USD</td>
+                                    <td>Kayunga</td>
+                                    <td>Delivered</td>
+                                </tr> 
+                         </table>
+                 </div>
+              </div>
+      </legend>                   
             </div>
         </div>
+        <div class="left">
+            <a  href="index.html">Home</a>
+        </div> 
     </body>
 </html>        
