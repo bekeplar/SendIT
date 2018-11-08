@@ -220,6 +220,19 @@ legend {
 .left a:hover{
     color: green;
 } 
+.center{
+    align-content: center;
+    font-size: 2em;
+    padding-left: 20em;
+   
+ }
+ .center a{
+     color: aqua;
+     text-decoration: none;
+ } 
+ .center a:hover{
+     color: green;
+ } 
 .price{
     color: green;
     font-size: 2em;
