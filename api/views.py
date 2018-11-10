@@ -42,3 +42,19 @@ def create_order():
             'message': 'You are providing wrong inputs'
         }), 400
 
+
+@blueprint.route('/orders', methods=['GET'])
+def get_all_parcels():
+    """
+    function to enable a user fetch all his parcel orders
+    :returns:
+    The entire list of parcel from the parcels.
+    """
+    if len(orders) == 0:
+        return jsonify({
+            'message': 'You havent created any order yet!'
+        }), 400
+    return jsonify({
+        'orders': orders
+    }), 200
+
