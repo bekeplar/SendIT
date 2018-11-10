@@ -42,3 +42,43 @@ def create_order():
             'message': 'You are providing wrong inputs'
         }), 400
 
+@blueprint.route('/orders', methods=['GET'])
+def get_all_parcels():
+    """
+    function to enable a user fetch all his parcel orders
+    :returns:
+    The entire list of parcel from the parcels.
+    """
+    if len(orders) == 0:
+        return jsonify({
+            'message': 'You havent created any order yet!'
+        }), 400
+    return jsonify({
+        'orders': orders
+    }), 200
+
+
+@blueprint.route('/orders/<int:id>', methods=['GET'])
+def get_specific_parcel(id):
+    """
+    Function to enable a registered user fetch a specific parcel details
+    product in the store.
+    :params:
+    :returns:
+    The parcel order given the right id.
+    """
+    try:
+        if len(orders) == 0:
+            return jsonify({
+                'message': 'There are no products yet!'
+            }), 404
+        order = orders[id - 1]
+        return jsonify({
+            'order': order,
+            'message': 'parcel succefully found!'
+        }), 200
+    except IndexError:
+        return jsonify({
+            'message': 'No such order in parcels!'
+        }), 404
+
