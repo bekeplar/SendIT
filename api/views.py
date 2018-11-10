@@ -81,4 +81,30 @@ def get_specific_parcel(id):
         return jsonify({
             'message': 'No such order in parcels!'
         }), 404
+@blueprint.route('/orders/<int:id>', methods=['PUT'])
+def cancel_parcel(id):
+    """
+    Function for a user to cancel a specific parcel.
+    :params:
+    :returns:
+    Return message for successful deletion.
+    """
+    try:
+        id = int(id)
+        if len(orders) == 0:
+            return jsonify({
+                'message': 'You have no parcel orders yet!'
+            }), 400
+        elif not order.id('order', id):
+            return jsonify({
+                'message': ' parcel not found!'
+            }), 400
+        del orders[id]
+        return jsonify({
+            'message': 'Parcel cancelled successfully!'
+        }), 200
+    except ValueError:
+        return jsonify({
+            'message': 'parcel id should be a number!'
+        }), 400
 
