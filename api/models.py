@@ -1,5 +1,4 @@
 import datetime
-import re
 
 
 class Order:
@@ -11,14 +10,48 @@ class Order:
         self.weihgt = args[2]
         self.Pickup_location = args[3]
         self.id = args[4]
+        self.name = args[5]
+
+    def Valid_order(self):
+        """
+        Method validates the attributes of an order.
+        : it should return:
+        True - if the given order details are all valid.
+        False - if one or all of the given details  are invalid.
+        """
+        if not self.destination or not self.price or not self.weihgt or\
+                self.destination.isspace():
+            return False
+        else:
+            return True
+
+        if not self.Pickup_location or not self.id or not self.weihgt.isspace() or\
+                self.destination.isspace():
+            return False
+        else:
+            return True    
+    
 
     
 
 class User:
     """Class handles users of the SendIT app"""
     users = []
-    def __init__(self, username, email, password, admin='false'):
-        self.username = username
+    def __init__(self, name, email, password, admin='false'):
+        self.name = name
         self.email = email
         self.password = password
         self.admin = admin
+
+
+orders = [
+    {
+        'destination': 'Mukono',
+        'date': '23-11-2018',
+        'Pickup_location': 'Nakawa',
+        'price': 80000,
+        'weight': 75,
+        'name': 'Bekalaze',
+        'id': 1
+    }
+]

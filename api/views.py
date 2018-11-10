@@ -1,10 +1,10 @@
 from flask import request, jsonify, Blueprint, json
 from api.models import Order
+from api.validate import  ValidUser
 import datetime
 
-
+orders = []
 blueprint = Blueprint('application', __name__)
-
 
 
 @blueprint.route('/orders', methods=['POST'])
@@ -20,11 +20,11 @@ def create_order():
         price = data.get('price')
         name = data.get('name')
         weight = data.get('weight')
-        id = len(Order.orders) + 1
+        id = len(orders) + 1
 
-        Order = Order(name, price, weight, id, destination, pickup_location)
+        order = Order(name, price, weight, id, destination, pickup_location)
 
-        if Order.valid_order() is False:
+        if order.Valid_order() is False:
             return jsonify({
                 'message': 'Please fill all input fields!'
             }), 400
@@ -32,12 +32,12 @@ def create_order():
             return jsonify({
                 'message': 'The price and weight must be numbers please!'
             }), 400
-        Order.orders.append(Order.__dict__)
+        orders.append(order.__dict__)
         return jsonify({
-            'order': Order.__dict__,
+            'order': order.__dict__,
             'message': 'Kudos Order created successfully wow!'
         }), 201
-    except Exception:
+    except ValueError:
         return jsonify({
             'message': 'You are providing wrong inputs'
         }), 400
