@@ -40,3 +40,5 @@ def test_get_all_parcels_from_empty_list(self):
 
         self.assertEqual(reply['message'], 'You havent created any orders yet')
         self.assertEqual(response.status_code, 400)
+
+        
