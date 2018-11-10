@@ -9,7 +9,7 @@ class TestOrder(unittest.TestCase):
         self.tester = app.test_client(self)
 
 
-    def test_add_product(self):
+    def test_add_order(self):
         """Test the method to add an order"""
         order = dict(
         destination='Mukono',
@@ -27,3 +27,16 @@ class TestOrder(unittest.TestCase):
         )
         reply = json.loads(response.data.decode())
         self.assertIn('Kudos Order created successfully wow!', reply['message'])
+
+
+
+def test_get_all_parcels_from_empty_list(self):
+        """Test that a user cannot fetch an empty list"""
+        response = self.tester.get(
+            '/api/v1/orders'
+        )
+
+        reply = json.loads(response.data.decode())
+
+        self.assertEqual(reply['message'], 'You havent created any orders yet')
+        self.assertEqual(response.status_code, 400)
