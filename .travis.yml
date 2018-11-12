@@ -1,11 +1,16 @@
-language: python
+anguage: python
+
 python:
   - "3.6"
-  
-# command to install dependencies
-install:
+
+cache: pip
+install: 
   - pip install -r requirements.txt
-  - pip install .
-# command to run tests
-script: pytest
-YAML
+  - pip install coveralls
+
+script: 
+  - pytest -v --cov api --cov-report term-missing
+  - coverage report
+  
+after_success:
+  - coveralls
