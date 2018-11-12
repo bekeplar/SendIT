@@ -9,7 +9,7 @@ install:
 
 #  command to run tests
 script:
-  - pytest --cov=api --cov-report term-missing
+  - pytest -v --cov api --cov-report term-missing
 
 after_success:
   - coveralls
