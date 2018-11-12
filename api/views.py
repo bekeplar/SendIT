@@ -75,7 +75,7 @@ def get_specific_parcel(id):
         order = orders[id - 1]
         return jsonify({
             'order': order,
-            'message': 'parcel succefully found!'
+            'message': 'parcel successfully found!'
         }), 200
     except IndexError:
         return jsonify({
