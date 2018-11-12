@@ -28,4 +28,4 @@ class TestOrder(unittest.TestCase):
         reply = json.loads(response.data.decode())
         self.assertIn('Kudos Order created successfully wow!', reply['message'])
 
-        
+    
