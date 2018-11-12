@@ -1,6 +1,7 @@
 lunguage : python
 python:
   "3.6"
+  "3.6.5"
 
 #  command to install dependences
 cache: pip
