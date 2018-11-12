@@ -70,7 +70,7 @@ def get_specific_parcel(id):
     try:
         if len(orders) == 0:
             return jsonify({
-                'message': 'There are no products yet!'
+                'message': 'you have not yet created orders yet!'
             }), 404
         order = orders[id - 1]
         return jsonify({
