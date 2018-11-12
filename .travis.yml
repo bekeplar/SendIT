@@ -9,8 +9,11 @@ install:
   - pip install coveralls
 
 script: 
-  - pytest -v --cov api --cov-report term-missing
-  - coverage report
+  - pytest --cov
+  - coverage
+  - coverage3 report
+  - coveralls 
   
 after_success:
   - coveralls
+  
