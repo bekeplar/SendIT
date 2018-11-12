@@ -61,8 +61,8 @@ def get_all_parcels():
 @blueprint.route('/orders/<int:id>', methods=['GET'])
 def get_specific_parcel(id):
     """
-    Function to enable a registered user fetch a specific parcel details
-    product in the store.
+    Function to enable a registered user fetch a specific parcel details.
+    
     :params:
     :returns:
     The parcel order given the right id.

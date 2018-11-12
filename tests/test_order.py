@@ -9,7 +9,7 @@ class TestOrder(unittest.TestCase):
         self.tester = app.test_client(self)
 
 
-    def test_add_product(self):
+    def test_create_order(self):
         """Test the method to add an order"""
         order = dict(
         destination='Mukono',
