@@ -27,7 +27,7 @@ class ValidUser:
     def valid_email(self):
         """
         Method validates a user's email
-        :it has return:
+        :it should return:
         True - if email is valid
         False - if email is not valid
         """

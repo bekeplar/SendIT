@@ -95,7 +95,7 @@ def cancel_parcel(id):
             return jsonify({
                 'message': 'You have no parcel orders yet!'
             }), 400
-        elif not order.id('order', id):
+        elif not self.id(id):
             return jsonify({
                 'message': ' parcel not found!'
             }), 400
