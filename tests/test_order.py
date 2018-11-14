@@ -28,6 +28,13 @@ class TestOrder(unittest.TestCase):
         reply = json.loads(response.data.decode())
         self.assertIn('Kudos Order created successfully wow!', reply['message'])
 
+    def test_parcel_added_successfully(self):
+        response = self.client.post(
+          '/api/v1/orders',
+            content_type='application/json'  
+        )
+        self.assertEqual(response.status_code, 400)    
+
 
     def test_add_order_with_missing_inputs(self):
         """Testing whether missing input fields are not allowed"""
@@ -56,7 +63,13 @@ class TestOrder(unittest.TestCase):
         )
         reply = json.loads(response.data.decode())
         self.assertIn('parcel successfully found!',reply['message'])
-        self.assertEqual(response.status_code, 200)    
+       
+
+    def test_specific_order_fetched_successfully(self):
+         response = self.client.get(
+        '/api/v1/orders/1'  
+        )
+         self.assertEqual(response.status_code, 200)        
         
 
     def test_fetch_an_existing_specific_order(self):
