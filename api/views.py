@@ -152,7 +152,6 @@ def signup():
             return jsonify({
                 'message': 'Email field can not be empty.'
                 }), 400
-        
 
         if not Valid_password():
             return jsonify({
