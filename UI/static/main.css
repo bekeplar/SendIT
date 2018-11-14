@@ -189,7 +189,15 @@ button{
     border-radius: 15px;
     padding: 12px 2px;
     text-align: center;
-    width: 35%;
+    width: 90%;
+    font-size: 16px;
+
+} 
+#pick table tr td button{
+    padding: 2px 2px;
+    background-color: aqua;
+    text-align: center;
+    width:100%;
     font-size: 16px;
 
 } 
@@ -265,8 +273,8 @@ legend {
     padding-right: 20%;
 } 
 #pick{
-    padding-left: 20%;
-    padding-right: 20%;
+    padding-left: 10%;
+    padding-right: 30%;
     padding-bottom: 10%;
     
 }
