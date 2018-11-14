@@ -28,7 +28,7 @@ POST|api/v1/orders|Create a parcel
 GET|api/v1/orders|Fetch all parcel orders
 GET|api/v1/orders|Fetch a specific parcel order
 PUT|api/v1/orders/<int:id>|Cancel a specific parcel order
-GET|api/v1/users/<int:int>Fetch all parcels by userid
+GET|api/v1/users/<int:int>|Fetch all parcels by userid
 
 ### Requirements
 
