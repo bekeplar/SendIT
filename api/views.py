@@ -4,6 +4,7 @@ from api.validate import  ValidUser
 import datetime
 
 orders = []
+uses = []
 blueprint = Blueprint('application', __name__)
 
 
@@ -107,4 +108,79 @@ def cancel_parcel(id):
         return jsonify({
             'message': 'parcel id should be a number!'
         }), 400
+@blueprint.route('/login', methods=['POST'])
+def login():
+    try:
+        data = request.get_json()
+
+        name = data.get('name')
+        password = data.get('password')
+        user = ValidUser(name, False, password)
+        if not user.valid_name():
+            return jsonify({
+                'message': 'Enter a valid name.'
+            }), 400
+        elif not valid_password():
+            return jsonify({
+                'message': 'Enter a valid password.'
+            }), 400
+        else:
+            return jsonify({
+                'message': '{} has logged in.'.format(username)
+            }), 200
+    except ValueError:
+            return jsonify({'message': 'Wrong login credentials.'}), 400        
+
+@blueprint.route('/signup', methods=['POST'])
+def signup():
+    try:
+
+        data = request.get_json()
+
+        name = data.get('name')
+        email = data.get('email')
+        password = data.get('password')
+        userId = uuid.uuid4()
+        user = ValidUser()
+
+        if not validate():
+            return jsonify({
+                'message': 'Username field can not be empty.'
+                }), 400
+
+        if not Valid_email():
+            return jsonify({
+                'message': 'Email field can not be empty.'
+                }), 400
+        
+
+        if not Valid_password():
+            return jsonify({
+                'message': 'Password must be at least 4 characters.'
+                }), 400
+
+        elif user.get('users', 'name', 'email'):
+            return jsonify({
+                'message': 'This person already has an account.'
+                }), 400
+        user = User(name, email, password)
+        return jsonify({
+            'message': '{} has been registered succesfully.'.format(name)
+        }), 201
+    except Exception:
+        return jsonify({
+            'message': 'Please try again.'
+            }), 400
+
+
+
+
+
+
+
+
+
+
+
+
 

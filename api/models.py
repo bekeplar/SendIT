@@ -37,11 +37,14 @@ class Order:
 class User:
     """Class handles users of the SendIT app"""
     users = []
-    def __init__(self, name, email, password, admin='false'):
+    def __init__(self, name, email, password, userId):
         self.name = name
         self.email = email
         self.password = password
-        self.admin = admin
+        self.userId = userId
+
+        
+
 
 
 orders = [
