@@ -27,9 +27,8 @@ HTTP Method|Endpoint|Functionality
 POST|api/v1/orders|Create a parcel
 GET|api/v1/orders|Fetch all parcel orders
 GET|api/v1/orders|Fetch a specific parcel order
-POST|api/v1/orders/<int:id>|Cancel a specific parcel order
-GET|api/v1/users/<int:int>|
-Fetch all parcel delivery orders by a specific user
+PUT|api/v1/orders/<int:id>|Cancel a specific parcel order
+GET|api/v1/users/<int:int>Fetch all parcels by userid
 
 ### Requirements
 
