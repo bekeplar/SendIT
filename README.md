@@ -28,7 +28,7 @@ POST|api/v1/orders|Create a parcel
 GET|api/v1/orders|Fetch all parcel orders
 GET|api/v1/orders|Fetch a specific parcel order
 PUT|api/v1/orders/<int:id>|Cancel a specific parcel order
-GET|api/v1/users/<int:int>|Fetch all parcels by userid
+GET|api/v1/users/<int:id>|Fetch all parcels by userid
 
 ### Requirements
 
@@ -41,6 +41,30 @@ GET|api/v1/users/<int:int>|Fetch all parcels by userid
 * Clone the project to your local machine
 ```
 git clone https://github.com/bekeplar/SendIT.git
+```
+* Change to the cloned directory
+```
+cd SendIT
+pip install virtualenv
+source venv/bin/activate
+git checkout ft-api
+pip install -r requirements.txt
+python run.py
+```
+* For those on windows
+```
+cd SendIT
+pip install virtualenv
+venv\Scripts\activate
+git checkout ft-api
+pip install -r requirements.txt
+python run.py
+```
+* Run tests by
+```
+pip install pytest
+pytest
+
 ```
 
 ## Authors:

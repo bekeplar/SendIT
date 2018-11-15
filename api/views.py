@@ -2,11 +2,38 @@ from flask import request, jsonify, Blueprint, json
 from api.models import Order
 from api.validate import  ValidUser
 import datetime
+import uuid
 
 orders = []
-uses = []
+users = []
 blueprint = Blueprint('application', __name__)
 
+@blueprint.route('/login', methods=['POST'])
+def login():
+    try:
+        data = request.get_json()
+
+        name = data.get('name')
+        password = data.get('password')
+        user = ValidUser(name, password)
+        if not user.valid_name():
+            return jsonify({
+                'message': 'Enter a valid name.'
+            }), 400
+        elif not valid_password():
+            return jsonify({
+                'message': 'Enter a valid password.'
+            }), 400
+        else:
+            return jsonify({
+                'message':
+                '{} has logged in.'.format(username)
+            }), 200
+    except ValueError:
+            return jsonify({
+                'message': 'Wrong login credentials.'
+                }), 400
+            
 
 @blueprint.route('/orders', methods=['POST'])
 def create_order():
@@ -31,17 +58,19 @@ def create_order():
             }), 400
         if not isinstance(price, int) or not isinstance(weight, int):
             return jsonify({
-                'message': 'The price and weight must be numbers please!'
+                'message':
+                'The price and weight must be numbers please!'
             }), 400
         orders.append(order.__dict__)
         return jsonify({
             'order': order.__dict__,
-            'message': 'Kudos Order created successfully wow!'
+            'message': 'Order created successfully!'
         }), 201
     except ValueError:
         return jsonify({
             'message': 'You are providing wrong inputs'
         }), 400
+
 
 @blueprint.route('/orders', methods=['GET'])
 def get_all_parcels():
@@ -62,7 +91,8 @@ def get_all_parcels():
 @blueprint.route('/orders/<int:id>', methods=['GET'])
 def get_specific_parcel(id):
     """
-    Function to enable a registered user fetch a specific parcel details.
+    Function to enable a registered 
+    user fetch a specific parcel details.
     
     :params:
     :returns:
@@ -82,6 +112,8 @@ def get_specific_parcel(id):
         return jsonify({
             'message': 'No such order in parcels!'
         }), 404
+
+
 @blueprint.route('/orders/<int:id>', methods=['PUT'])
 def cancel_parcel(id):
     """
@@ -108,30 +140,11 @@ def cancel_parcel(id):
         return jsonify({
             'message': 'parcel id should be a number!'
         }), 400
-@blueprint.route('/login', methods=['POST'])
-def login():
-    try:
-        data = request.get_json()
 
-        name = data.get('name')
-        password = data.get('password')
-        user = ValidUser(name, False, password)
-        if not user.valid_name():
-            return jsonify({
-                'message': 'Enter a valid name.'
-            }), 400
-        elif not valid_password():
-            return jsonify({
-                'message': 'Enter a valid password.'
-            }), 400
-        else:
-            return jsonify({
-                'message': '{} has logged in.'.format(username)
-            }), 200
-    except ValueError:
-            return jsonify({'message': 'Wrong login credentials.'}), 400        
 
-@blueprint.route('/signup', methods=['POST'])
+
+
+@blueprint.route('/users', methods=['POST'])
 def signup():
     try:
 
@@ -170,12 +183,6 @@ def signup():
         return jsonify({
             'message': 'Please try again.'
             }), 400
-
-
-
-
-
-
 
 
 
