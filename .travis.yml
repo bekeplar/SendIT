@@ -9,7 +9,7 @@ install:
   - pip install coveralls
 
 script: 
-  - py.test --cov-report term-missing --cov api -v
+  - pytest--cov=api
   - coverage
   - coveralls 
   
