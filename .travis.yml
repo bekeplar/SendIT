@@ -7,9 +7,11 @@ cache: pip
 install: 
   - pip install -r requirements.txt
   - pip install coveralls
+  - pip install codecov
 
 script: 
-  - python -m pytest --cov
+  - pytest -v --cov api --cov-report term-missing
+  - coverage report
   
 after_success:
   - coveralls
