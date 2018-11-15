@@ -1,8 +1,8 @@
 from flask import request, jsonify, Blueprint, json
-from api.models import Order
-from api.validate import  ValidUser
+from api.models import Order, User
 import datetime
 import uuid
+import re
 
 orders = []
 users = []
@@ -152,32 +152,31 @@ def signup():
         email = data.get('email')
         password = data.get('password')
         userId = uuid.uuid4()
-        user = ValidUser()
+        user = User(name, email, password, userId)
 
-        if not validate():
+        if not name or name.isspace() or not isinstance(
+                name, str):
             return jsonify({
                 'message': 'Username field can not be empty.'
                 }), 400
 
-        if not Valid_email():
+        if not email or not re.match(
+                    r"[^@.]+@[A-Za-z]+\.[a-z]+", email):
             return jsonify({
-                'message': 'Email field can not be empty.'
+                'message':
+                'The  email must be alphanumeric please!'
+            }), 400
+        elif len(password) > 4:
+            return jsonify({
+                'message': 
+                'Password must be at least 4 characters.'
                 }), 400
 
-        if not Valid_password():
-            return jsonify({
-                'message': 'Password must be at least 4 characters.'
-                }), 400
-
-        elif user.get('users', 'name', 'email'):
-            return jsonify({
-                'message': 'This person already has an account.'
-                }), 400
-        user = User(name, email, password)
+        user = User(name, email, password, userId)
         return jsonify({
             'message': '{} has been registered succesfully.'.format(name)
         }), 201
-    except Exception:
+    except ValueError:
         return jsonify({
             'message': 'Please try again.'
             }), 400
@@ -189,7 +188,6 @@ def get_user(id):
     """
     Function to enable an admin 
     fetch parcel details by userId.
-    
     :params:
     :returns:
     The user given the right user id.

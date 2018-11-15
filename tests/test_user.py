@@ -22,7 +22,9 @@ class TestUser(unittest.TestCase):
             data=json.dumps(user)
         )
         reply = json.loads(response.data.decode())
-        self.assertIn('Please try again.',reply['message'])   
+        self.assertIn(
+            'Password must be at least 4 characters.',
+            reply['message'])   
 
     def test_login_with_missing_input(self):
         """Test the method to signup a user"""
@@ -53,7 +55,7 @@ class TestUser(unittest.TestCase):
             data=json.dumps(user)
         )
         reply = json.loads(response.data.decode())
-        self.assertEqual(response.status_code, 400)  
+        self.assertEqual(response.status_code, 201)  
 
     def test_fetch_a_non_existing_specific_user(self):
         """Test that a non existing user can be obtained"""
