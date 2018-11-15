@@ -142,8 +142,6 @@ def cancel_parcel(id):
         }), 400
 
 
-
-
 @blueprint.route('/users', methods=['POST'])
 def signup():
     try:
@@ -183,6 +181,34 @@ def signup():
         return jsonify({
             'message': 'Please try again.'
             }), 400
+
+
+
+@blueprint.route('/users/<int:id>', methods=['GET'])
+def get_user(id):
+    """
+    Function to enable an admin 
+    fetch parcel details by userId.
+    
+    :params:
+    :returns:
+    The user given the right user id.
+    """
+    try:
+        if len(users) == 0:
+            return jsonify({
+                'message': 'There are no customers yet!'
+            }), 404
+        user = users[id - 1]
+        return jsonify({
+            'user': user,
+            'message': 'user found successfully!'
+        }), 200
+    except IndexError:
+        return jsonify({
+            'message': 'No such user in users!'
+        }), 404
+        
 
 
 

@@ -26,7 +26,10 @@ class TestOrder(unittest.TestCase):
             data=json.dumps(order)
         )
         reply = json.loads(response.data.decode())
-        self.assertIn('Kudos Order created successfully wow!', reply['message'])
+        self.assertIn(
+            'Order created successfully!',
+            reply['message'
+            ])
 
     def test_parcel_added_successfully(self):
         response = self.client.post(
@@ -53,7 +56,7 @@ class TestOrder(unittest.TestCase):
             data=json.dumps(order)
         )
         reply = json.loads(response.data.decode())
-        self.assertIn('Kudos Order created successfully wow!',reply['message'])
+        self.assertIn('Order created successfully!',reply['message'])
         
 
     def test_fetch_a_specific_order(self):
