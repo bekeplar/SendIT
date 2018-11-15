@@ -1,7 +1,7 @@
 language: python
 
 python:
-  - "3.6"
+  - "3.6.5"
 
 cache: pip
 install: 
@@ -9,11 +9,9 @@ install:
   - pip install coveralls
 
 script: 
-  - pytest --cov
-  - coverage
-  - coverage3 report
-  - coveralls 
+  - python3 -m pytest -v --cov api --cov-report term-missing
   
 after_success:
   - coveralls
+  - codecov
   
