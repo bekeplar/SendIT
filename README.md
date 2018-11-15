@@ -66,6 +66,25 @@ pip install pytest
 pytest
 
 ```
+* Testing Endpoints
+```
+copy the url in the terminal
+paste it in postman
+Use the following sample data
+orders = [
+    {
+        'destination': 'Mukono',
+        'date': '23-11-2018',
+        'Pickup_location': 'Nakawa',
+        'price': 80000,
+        'weight': 75,
+        'name': 'Bekalaze',
+        'id': 1
+    }
+]
+
+```
+
 
 ## Authors:
 Bekalaze Joseph
