@@ -120,7 +120,7 @@ def cancel_parcel(id):
     Function for a user to cancel a specific parcel.
     :params:
     :returns:
-    Return message for successful deletion.
+    Return message for successful cancellation.
     """
     try:
         id = int(id)

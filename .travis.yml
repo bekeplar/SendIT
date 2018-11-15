@@ -8,9 +8,10 @@ install:
   - pip install -r requirements.txt
   - pip install coveralls
   - pip install codecov
+  - pip install pytest
 
 script: 
-  - pytest --cov
+  - python -m pytest
   - coverage
   - coveralls
   

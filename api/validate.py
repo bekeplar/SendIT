@@ -50,7 +50,8 @@ class ValidUser:
         upper_case = re.search(r"[A-Z]", self.password)
         numbers = re.search(r"[0-9]", self.password)
 
-        if not self.password or not all((lower_case, upper_case, numbers))\
+        if not self.password or not all(
+            (lower_case, upper_case, numbers))\
                 or not len(self.password) > 4:
             return False
         else:
