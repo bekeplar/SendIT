@@ -6,17 +6,14 @@ python:
 cache: pip
 install: 
   - pip install -r requirements.txt
-  - pip install coveralls
-  - pip install codecov
-  - pip install pytest
 
 script: 
-  - python -m pytest
+  - pytest --cov
   - coverage
+  - coverage3 report
   - coveralls
   
   
 after_success:
   - coveralls
-  - codecov
   
