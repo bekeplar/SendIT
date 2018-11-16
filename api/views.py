@@ -8,6 +8,12 @@ orders = []
 users = []
 blueprint = Blueprint('application', __name__)
 
+@blueprint.route('/login')
+def index():
+    return jsonify({
+                'message': 'Welcome to my SendIT web.'
+            })
+
 @blueprint.route('/login', methods=['POST'])
 def login():
     try:
@@ -132,10 +138,12 @@ def cancel_parcel(id):
             return jsonify({
                 'message': ' parcel not found!'
             }), 400
-        del orders[id]
-        return jsonify({
-            'message': 'Parcel cancelled successfully!'
-        }), 200
+        for order in orders:
+            if order['id'] == id:     
+                orders.remove(order)
+                return jsonify({
+                    'message': 'Parcel cancelled successfully!'
+                }), 200
     except ValueError:
         return jsonify({
             'message': 'parcel id should be a number!'
