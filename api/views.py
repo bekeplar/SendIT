@@ -8,7 +8,7 @@ orders = []
 users = []
 blueprint = Blueprint('application', __name__)
 
-@blueprint.route('/login')
+@blueprint.route('/home')
 def index():
     return jsonify({
                 'message': 'Welcome to my SendIT web.'
