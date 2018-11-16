@@ -66,6 +66,14 @@ class TestOrder(unittest.TestCase):
         )
         reply = json.loads(response.data.decode())
         self.assertIn('parcel successfully found!',reply['message'])
+
+    def test_cancel_parcel(self):
+        """Test if a user can  a specific parcel"""
+        response = self.client.get(
+        '/api/v1/orders/1'  
+        )
+        reply = json.loads(response.data.decode())
+        self.assertIn('parcel successfully found!',reply['message'])    
        
 
     def test_specific_order_fetched_successfully(self):

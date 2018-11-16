@@ -11,6 +11,7 @@ class Order:
         self.Pickup_location = args[3]
         self.id = args[4]
         self.name = args[5]
+        self.status = args[6]
 
     def Valid_order(self):
         """
@@ -37,11 +38,12 @@ class Order:
 class User:
     """Class handles users of the SendIT app"""
     users = []
-    def __init__(self, name, email, password, userId):
+    def __init__(self, name, email, password, userId,):
         self.name = name
         self.email = email
         self.password = password
         self.userId = userId
+
 
         
 
@@ -50,11 +52,12 @@ class User:
 orders = [
     {
         'destination': 'Mukono',
-        'date': '23-11-2018',
-        'Pickup_location': 'Nakawa',
         'price': 80000,
         'weight': 75,
+        'Pickup_location': 'Nakawa',
+        'id': 1,
         'name': 'Bekalaze',
-        'id': 1
+        'status': 'pending',
+        'date': '23-11-2018'
     }
 ]

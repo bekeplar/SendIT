@@ -54,9 +54,20 @@ def create_order():
         price = data.get('price')
         name = data.get('name')
         weight = data.get('weight')
+        status = data.get('status')
+        date = data.get('date')
         id = len(orders) + 1
 
-        order = Order(name, price, weight, id, destination, pickup_location)
+        order = Order(
+            destination, 
+            price, 
+            weight, 
+            pickup_location, 
+            id, 
+            name, 
+            status, 
+            date
+            )
 
         if order.Valid_order() is False:
             return jsonify({
@@ -134,16 +145,16 @@ def cancel_parcel(id):
             return jsonify({
                 'message': 'You have no parcel orders yet!'
             }), 400
-        elif not self.id(id):
-            return jsonify({
-                'message': ' parcel not found!'
-            }), 400
-        for order in orders:
-            if order['id'] == id:     
-                orders.remove(order)
-                return jsonify({
+        else:
+            for order in orders:
+                if order ['Pickup_location'] == id:
+                    order['status'] = 'cancelled'
+                    return jsonify({
                     'message': 'Parcel cancelled successfully!'
                 }), 200
+            return jsonify({
+                'message': ' parcel not found!'
+            }), 400    
     except ValueError:
         return jsonify({
             'message': 'parcel id should be a number!'
@@ -174,7 +185,7 @@ def signup():
                 'message':
                 'The  email must be alphanumeric please!'
             }), 400
-        elif len(password) > 4:
+        elif len(password) < 4:
             return jsonify({
                 'message': 
                 'Password must be at least 4 characters.'
