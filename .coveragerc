@@ -1,0 +1,19 @@
+[report]
+
+omit = 
+    */python?.?/*
+    */site-packages/*
+    */home/travis/virtualenv/*
+    *__init__*
+    */dist-packages/*
+    tests/*
+    app/exception_handler.py
+    */venv/*
+    */__pycache/*
+    */.pytest_cache/*
+    api/models/*
+    *validate/*
+
+exclude_lines =
+    pragma: no cover
+    def index
