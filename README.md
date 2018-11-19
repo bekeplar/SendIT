@@ -1,30 +1,95 @@
 # Project Overview
 SendIT is a courier service that helps users deliver parcels to different destinations. SendIT provides courier quotes based on weight categories.
 
-# Required Features
 
-- Users can create an account and log in.
+[![Build Status](https://travis-ci.org/bekeplar/SendIT.svg?branch=ft-user-cancel-parcel)](https://travis-ci.org/bekeplar/SendIT)
+[![Maintainability](https://api.codeclimate.com/v1/badges/3572e2c0da5d9b0127e5/maintainability)](https://codeclimate.com/github/bekeplar/SendIT/maintainability)
+[![Coverage Status](https://coveralls.io/repos/github/bekeplar/SendIT/badge.svg?branch=ft-get-user)](https://coveralls.io/github/bekeplar/SendIT?branch=ft-get-user)
 
-- Users can create a parcel delivery order.
+### Required Features
+- User can signup
 
-- Users can change the destination of a parcel delivery order.
+- User can login
 
-- Users can cancel a parcel delivery order.
+- Create a parcel delivery order
 
-- Users can see the details of a delivery order.
+- Get all parcel delivery orders
 
-- Admin can change the status and present location of a parcel delivery order.
+- Get a specific parcel delivery order
 
- 
-# Optional Features
+- Cancel a parcel delivery order
 
-- The application should display a Google Map with Markers showing the pickup location and the destination.
+- Fetch all parcel delivery orders by a specific user
 
-- The application should display a Google Map with a line connecting both Markers (pickup location and the destination).
+### Endpoints
 
-- The application should display a Google Map with computed travel distance and journey duration between the pickup location and the destination.
+HTTP Method|Endpoint|Functionality
+-----------|--------|-------------
+POST|api/v1/orders|Create a parcel
+GET|api/v1/orders|Fetch all parcel orders
+GET|api/v1/orders|Fetch a specific parcel order
+PUT|api/v1/orders/<int:id>|Cancel a specific parcel order
+GET|api/v1/users/<int:id>|Fetch all parcels by userid
 
-- The user gets real-time email notification when Admin changes the status of their parcel.
+### Requirements
 
-- The user gets real-time email notification when Admin changes the present location their parcel.
- 
+- Python
+- Flask
+- Virtualenv
+- Postman
+
+### Getting started
+* Clone the project to your local machine
+```
+git clone https://github.com/bekeplar/SendIT.git
+```
+* Change to the cloned directory
+```
+cd SendIT
+pip install virtualenv
+source venv/bin/activate
+git checkout ft-api
+pip install -r requirements.txt
+python run.py
+```
+* For those on windows
+```
+cd SendIT
+pip install virtualenv
+venv\Scripts\activate
+git checkout ft-api
+pip install -r requirements.txt
+python run.py
+```
+* Run tests by
+```
+pip install pytest
+pytest
+
+```
+* Testing Endpoints
+```
+copy the url in the terminal
+paste it in postman
+Use the following sample data
+orders = [
+    {
+        'destination': 'Mukono',
+        'date': '23-11-2018',
+        'Pickup_location': 'Nakawa',
+        'price': 80000,
+        'weight': 75,
+        'name': 'Bekalaze',
+        'id': 1
+    }
+]
+
+```
+
+
+## Authors:
+Bekalaze Joseph
+
+### Courtesy of :
+Andela Bootcamp 14
+
