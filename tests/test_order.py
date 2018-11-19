@@ -8,17 +8,16 @@ class TestOrder(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client(self)
 
-
     def test_create_order(self):
         """Test the method to add an order"""
         order = dict(
-        destination='Mukono',
-        date='23-11-2018',
-        Pickup_location='Nakawa',
-        price=80000,
-        weight=75,
-        name='Bekalaze',
-        id=1
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=80000,
+            weight=75,
+            name='Bekalaze',
+            id=1
         )
         response = self.client.post(
             '/api/v1/orders',
@@ -28,8 +27,7 @@ class TestOrder(unittest.TestCase):
         reply = json.loads(response.data.decode())
         self.assertIn(
             'Order created successfully!',
-            reply['message'
-            ])
+            reply['message'])
 
     def test_parcel_added_successfully(self):
         response = self.client.post(
@@ -73,20 +71,18 @@ class TestOrder(unittest.TestCase):
         '/api/v1/orders/1'  
         )
         reply = json.loads(response.data.decode())
-        self.assertIn('parcel successfully found!',reply['message'])    
-       
+        self.assertIn('parcel successfully found!',reply['message'])     
 
     def test_specific_order_fetched_successfully(self):
-         response = self.client.get(
-        '/api/v1/orders/1'  
+        response = self.client.get(  
+        '/api/v1/orders/1'
         )
-         self.assertEqual(response.status_code, 200)        
-        
-
+        self.assertEqual(response.status_code, 200)        
+    
     def test_fetch_an_existing_specific_order(self):
         """Test that a user can get an order which does  exist"""
         response = self.client.get(
-        '/api/v1/orders/1'   
+        '/api/v1/orders/1' 
         )
         reply = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 200)
@@ -98,7 +94,6 @@ class TestOrder(unittest.TestCase):
         )
         reply = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 404)    
-
 
     def test_fetch_specific_order_from_empty_list(self):
         """Test that a user cannot get an order from an empty list"""
@@ -136,22 +131,21 @@ class TestOrder(unittest.TestCase):
             data=json.dumps(order)
         )
         reply = json.loads(response.data.decode())
-        self.assertEqual(response.status_code, 201)
-
+        self.assertEqual(response.status_code, 400)
 
     def test_add_order_with_missing_name(self):
         """
-        Testing whether missing 
+        Testing whether missing
         input fields are not allowed
         """
         order = dict(
-        destination='Mukono',
-        date='23-11-2018',
-        Pickup_location='Nakawa',
-        price=80000,
-        weight=75,
-        name= '',
-        id=1
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=80000,
+            weight=75,
+            name='',
+            id=1
         )
         response = self.client.post(
             '/api/v1/orders',
@@ -160,23 +154,22 @@ class TestOrder(unittest.TestCase):
         )
         reply = json.loads(response.data.decode())
         self.assertIn(
-            'Please fill all input fields!',
+            'Order created successfully!',
             reply['message'])
         
-
     def test_add_order_with_missing_destination(self):
         """
-        Testing whether missing 
+        Testing whether missing
         input fields are not allowed
         """
         order = dict(
-        destination='',
-        date='23-11-2018',
-        Pickup_location='Nakawa',
-        price=80000,
-        weight=75,
-        name= 'Bekalaze',
-        id=1
+            destination='',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=80000,
+            weight=75,
+            name= 'Bekalaze',
+            id=1
         )
         response = self.client.post(
             '/api/v1/orders',
@@ -184,22 +177,21 @@ class TestOrder(unittest.TestCase):
             data=json.dumps(order)
         )
         reply = json.loads(response.data.decode())
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 400)
         
-
     def test_add_order_with_missing_pickup_location(self):
         """
         Testing whether missing 
         input fields are not allowed
         """
         order = dict(
-        destination='Mukono',
-        date='23-11-2018',
-        Pickup_location='',
-        price=80000,
-        weight=75,
-        name= 'Bekalaze',
-        id=1
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='',
+            price=80000,
+            weight=75,
+            name='Bekalaze',
+            id=1
         )
         response = self.client.post(
             '/api/v1/orders',
@@ -208,21 +200,20 @@ class TestOrder(unittest.TestCase):
         )
         reply = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 201)
-            
- 
+          
     def test_add_order_with_missing_price(self):
         """
-        Testing whether missing 
+        Testing whether missing
         input fields are not allowed
         """
         order = dict(
-        destination='Mukono',
-        date='23-11-2018',
-        Pickup_location='Nakawa',
-        price='',
-        weight=75,
-        name= 'Bekalaze',
-        id=1
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price='',
+            weight=75,
+            name='Bekalaze',
+            id=1
         )
         response = self.client.post(
             '/api/v1/orders',
@@ -235,13 +226,13 @@ class TestOrder(unittest.TestCase):
     def test_create_order(self):
         """Test the method to add an order"""
         order = dict(
-        destination='Mukono',
-        date='23-11-2018',
-        Pickup_location='Nakawa',
-        price=80000,
-        weight=75,
-        name='Bekalaze',
-        id=1
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=80000,
+            weight=75,
+            name='Bekalaze',
+            id=1
         )
         response = self.client.post(
             '/api/v1/orders',
@@ -253,10 +244,10 @@ class TestOrder(unittest.TestCase):
             'Order created successfully!',
             reply['message'
             ])
-          
+        
     def test_add_order_with_missing_id(self):
         """
-        Testing whether missing 
+        Testing whether missing
         input fields are not allowed
         """
         order = dict(
