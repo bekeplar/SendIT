@@ -23,3 +23,6 @@ class TestUsers(unittest.TestCase):
         print(json.loads(response.data.decode()))
 
         self.assertEqual(message['message'], 'Bekalaze3 has been registered succesfully.')
+
+       
+        

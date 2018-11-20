@@ -19,13 +19,16 @@ class TestOrder(unittest.TestCase):
             name='Bekalaze',
             id=1,
             present_location='Namanve'
-        )
-        response = self.client.post(
-            '/api/v1/orders',
-            content_type='application/json',
-            data=json.dumps(order)
-        )
-        reply = json.loads(response.data.decode())
-        print(json.loads(response.data.decode()))
-        self.assertEqual(reply['message'],'Order created successfully!')
+
+
+    
+       
+       
+       
+       
+       
         
+       
+
+       
+       
