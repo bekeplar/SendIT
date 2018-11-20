@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify, Blueprint, json
-import uuid, datetime, re
+import uuid
+import datetime
+import re
 from database.db import DatabaseConnection
 from api.models import Order, User
 from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
@@ -9,14 +11,15 @@ blueprint = Blueprint('application', __name__)
 
 db = DatabaseConnection()
 
+
 @blueprint.route('/')
 def home():
     return jsonify({
                 'message': 'Welcome to my SendIT web.'
             })
 
+
 @blueprint.route('/auth/signup', methods=['POST'])
-@jwt_required
 def signup():
     try:
 
@@ -26,7 +29,7 @@ def signup():
         email = data.get('email')
         password = data.get('password')
         userId = uuid.uuid4()
-        password_hash = generate_password_hash(method='sha256')
+        password_hash = generate_password_hash(password, method='sha256')
 
         if not name or name.isspace() or not isinstance(
                 name, str):
@@ -45,9 +48,8 @@ def signup():
                 'message': 
                 'Password must be at least 4 characters.'
                 }), 400
-        db = DatabaseConnection()
         name_db = db.check_name(name)
-        email_db = check_email(email)
+        email_db = db.check_email(email)
         if name_db != None:
             return jsonify({
                 'message':
@@ -59,16 +61,15 @@ def signup():
                 'Email already registered!'
             }), 400
 
-        db.insert_user(name, email, password, userId)
-        access_token = create_access_token(name)        
+        db.insert_user(name, email, password)      
         return jsonify({
-            'access_token': access_token,
             'message': '{} has been registered succesfully.'.format(name)
         }), 201
     except ValueError:
         return jsonify({
             'message': 'Please try again.'
             }), 400
+
 
 @blueprint.route('/auth/login', methods=['POST'])
 def login():
@@ -87,7 +88,6 @@ def login():
             return jsonify({
                 'message': 'Enter a valid password.'
             }), 400
-        db = DatabaseConnection()
         user = db.login(name)
         access_token = create_access_token(identity=name)
         return jsonify({
@@ -98,37 +98,38 @@ def login():
     except ValueError:
             return jsonify({
                 'message': 'provide correct credentials.'
-                }), 400            
+                }), 400
+
+
 @blueprint.route('/orders', methods=['POST'])
 @jwt_required
 def create_order():
     """
     Function adds a parcel delivery order to the database.
-    
+   
     """
     try:
         data = request.get_json()
         name = get_jwt_identity()
 
         destination = data.get('destination')
-        pickup_location = data.get('pickup_location')
+        Pickup_location = data.get('pickup_location')
         price = data.get('price')
         name = data.get('name')
         weight = data.get('weight')
         status = data.get('status')
-        date = data.get('date')
-        id = len(orders) + 1
+        date = datetime.datetime.utcnow()
         present_location = data.get('present_location')
 
         order = Order(
-            destination, 
-            price, 
-            weight, 
-            pickup_location, 
-            id, 
-            name, 
-            status, 
-            date
+            destination,
+            price,
+            weight,
+            Pickup_location,
+            name,
+            status,
+            date,
+            present_location
             )
 
         if order.Valid_order() is False:
@@ -140,8 +141,7 @@ def create_order():
                 'message':
                 'The price and weight must be numbers please!'
             }), 400
-        db = DatabaseConnection
-        db.insert_order()
+        db.insert_order(destination, price, weight, Pickup_location,  name, status, present_location)
         return jsonify({
             'order': order.__dict__,
             'message': 'Order created successfully!'
@@ -159,14 +159,13 @@ def get_all_parcels():
     :returns:
     The entire list of parcel from the parcels database.
     """
-    db = DatabaseConnection
-    parcels_db = db.get_all_parcels()
-    if parcels_db == None:
+    parcels_db = db.fetch_all_orders()
+    if not parcels_db:
         return jsonify({
             'message': 'You havent created any order yet!'
         }), 400
     return jsonify({
-        'orders': orders
+        'orders': parcels_db
     }), 201
 
 
@@ -174,9 +173,8 @@ def get_all_parcels():
 @jwt_required
 def get_specific_parcel(id):
     """
-    Function to enable a registered 
+    Function to enable a registered
     user fetch a specific parcel details.
-    
     :params:
     :returns:
     The parcel order given the right id.
@@ -184,8 +182,8 @@ def get_specific_parcel(id):
     name = get_jwt_identity()
     try:
         db = DatabaseConnection()
-        order = db.query_one(id)
-        if order == None:
+        order = db.fetch_order(id)
+        if not order:
             return jsonify({
                 'message': 'you have no such order!'
             }), 404

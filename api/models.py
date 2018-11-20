@@ -7,11 +7,11 @@ class Order:
     def __init__(self, *args):
         self.destination = args[0]
         self.price = args[1]
-        self.weihgt = args[2]
+        self.weight = args[2]
         self.Pickup_location = args[3]
-        self.id = args[4]
-        self.name = args[5]
-        self.status = args[6]
+        self.name = args[4]
+        self.status = args[5]
+        self.date = args[6]
         self.present_location = args[7]
 
     def Valid_order(self):
@@ -21,7 +21,7 @@ class Order:
         True - if the given order details are all valid.
         False - if one or all of the given details  are invalid.
         """
-        if not self.destination or not self.price or not self.weihgt or\
+        if not self.destination or not self.price or not self.weight or\
                 self.destination.isspace():
             return False
         else:

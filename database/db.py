@@ -21,8 +21,8 @@ class DatabaseConnection:
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
 
-            create_order_table = "CREATE TABLE IF NOT EXISTS orders(id TEXT NOT NULL PRIMARY KEY, destination TEXT NOT NULL, price FLOAT NOT NULL, weight FLOAT NOT NULL, Pickup_location TEXT NOT NULL, name TEXT NOT NULL, status TEXT NOT NULL,present_location TEXT NOT NULL);"
-            create_user_table = "CREATE TABLE IF NOT EXISTS users(name TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL, userId TEXT NOT NULL PRIMARY KEY);"
+            create_order_table = "CREATE TABLE IF NOT EXISTS orders(id SERIAL NOT NULL PRIMARY KEY, destination TEXT NOT NULL, price FLOAT NOT NULL, weight FLOAT NOT NULL, Pickup_location TEXT NOT NULL, name TEXT NOT NULL, status TEXT NOT NULL,present_location TEXT NOT NULL, date TIMESTAMP);"
+            create_user_table = "CREATE TABLE IF NOT EXISTS users(name TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL, userId SERIAL NOT NULL PRIMARY KEY);"
             self.cursor.execute(create_order_table)
             self.cursor.execute(create_user_table)
         except (Exception, psycopg2.DatabaseError) as error:
@@ -31,29 +31,28 @@ class DatabaseConnection:
     def insert_order(self, *args):
         destination = args[0]
         price = args[1]
-        weihgt = args[2]
+        weight = args[2]
         Pickup_location = args[3]
-        id = args[4]
-        name = args[5]
-        status = args[6]
-        present_location = args[7]
+        name = args[4]
+        status = args[5]
+        present_location = args[6]
 
         """Method for adding a new parcel to orders"""
-        insert_order = "INSERT INTO orders(destination, price, weight, Pickup_location, id, name, status) VALUES('{}', '{}', '{}', '{}')".format(
+        insert_order = "INSERT INTO orders(destination, price, weight, Pickup_location,  name, status, present_location) VALUES('{}', '{}', '{}', '{}','{}', '{}', '{}')".format(
             destination,
             price,
             weight,
             Pickup_location,
-            id,
             name,
-            status
+            status,
+            present_location
         )
-        pprint(insert_user)
+        pprint(insert_order)
         self.cursor.execute(insert_order)
 
-    def insert_user(self):
+    def insert_user(self, name, email, password):
         """Method for adding a new user to users"""
-        insert_user = "INSERT INTO users(name, email, password, userId) VALUES('{}', '{}', '{}', '{}')".format(name, email, password, userId)
+        insert_user = "INSERT INTO users(name, email, password) VALUES('{}', '{}', '{}')".format(name, email, password)
         pprint(insert_user)
         self.cursor.execute(insert_user)
 
@@ -89,7 +88,7 @@ class DatabaseConnection:
         pprint(query)
         self.cursor.execute(query)
         user = self.cursor.fetchone()
-        return user 
+        return user
 
     def user(self, name):
         """Returning a user id from database"""
@@ -102,16 +101,16 @@ class DatabaseConnection:
     def fetch_all_orders(self):
         """Method to return all existing parcels"""
         query_all = "SELECT * FROM orders"
-        pprint(query)
-        self.cursor.execute(query)
-        user = self.cursor.fetchall()
+        pprint(query_all)
+        self.cursor.execute(query_all)
+        orders = self.cursor.fetchall()
         return orders    
     
     def fetch_order(self, id):
         """Method to return a given parcel by its id."""
         query_one = "SELECT * FROM orders WHERE id='{}'".format(id)
-        pprint(query)
-        self.cursor.execute(query)
+        pprint(query_one)
+        self.cursor.execute(query_one)
         order = self.cursor.fetchone()
         return order 
 

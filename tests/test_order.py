@@ -7,7 +7,7 @@ from api.models import Order
 class TestOrder(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client(self)
-        
+      
     def test_create_order(self):
         """Test the method to add an order"""
         order = dict(
@@ -26,5 +26,6 @@ class TestOrder(unittest.TestCase):
             data=json.dumps(order)
         )
         reply = json.loads(response.data.decode())
-        self.assertIn('Order created successfully!', reply['message'])
+        print(json.loads(response.data.decode()))
+        self.assertEqual(reply['message'],'Order created successfully!')
         
