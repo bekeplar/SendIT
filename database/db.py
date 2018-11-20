@@ -115,7 +115,7 @@ class DatabaseConnection:
         return order 
 
     def update_status(self, id, status):
-        query = "UPDATE orders SET status='{}' WHERE id='{}'and status='{}'".format(id, status)
+        query = "UPDATE orders SET status='{}' WHERE id='{}'".format( status,id)
         pprint(query)
         self.cursor.execute(query)
         

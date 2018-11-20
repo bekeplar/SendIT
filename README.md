@@ -21,6 +21,14 @@ SendIT is a courier service that helps users deliver parcels to different destin
 
 - Fetch all parcel delivery orders by a specific user
 
+- The user can change the destination of a parcel delivery order.
+
+- Admin can view all parcel delivery orders in the application.
+
+- Admin can change the status of a parcel delivery order.
+
+
+
 ### Endpoints
 
 HTTP Method|Endpoint|Functionality
@@ -30,6 +38,14 @@ GET|api/v1/orders|Fetch all parcel orders
 GET|api/v1/orders|Fetch a specific parcel order
 PUT|api/v1/orders/<int:id>|Cancel a specific parcel order
 GET|api/v1/users/<int:id>|Fetch all parcels by userid
+POST|api/auth/login|Login a user
+POST|api/auth/signup|create a user
+PUT|api/v1/orders/<parcelId>/status|Change the status of a specific parcel
+PUT|api/v1/orders/<parcelId>/destination|Change the location of a specific parcel
+PUT|api/v1/orders/<parcelId>/PresentLocation|Change the present location parcel
+
+
+
 
 ### Requirements
 

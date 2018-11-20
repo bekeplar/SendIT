@@ -164,7 +164,8 @@ def get_all_parcels():
             'message': 'You havent created any order yet!'
         }), 400
     return jsonify({
-        'orders': parcels_db
+        'orders': parcels_db,
+        'message':'These are your parcels'
     }), 201
 
 
@@ -205,23 +206,24 @@ def cancel_parcel(id):
     :returns:
     Return message for successful cancellation.
     """
+    data = request.get_json()['status']
     name = get_jwt_identity()
     try:
-        db = DatabaseConnection()
+
         order = db.fetch_order(id)
         if not order:
             return jsonify({
                 'message': 'you have no such order!'
             }), 404
         else:
-            cancel_parcel = db.update_status(id,)
+            order = db.update_status(id, data)
             return jsonify({
-            'order': order,
-            'message': 'parcel successfully cancelled!'
-        }), 200
+                "order": db.fetch_order(id),
+                "message":"parcel successfully cancelled!"
+                }), 201
     except ValueError:
         return jsonify({
-            'message': 'parcel id should be a number!'
+            'message': 'Please provide right inputs'
         }), 400
-
+                
 
