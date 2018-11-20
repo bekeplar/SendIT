@@ -1,26 +1,121 @@
-from flask import request, jsonify, Blueprint, json
-from api.models import Order, User
-import datetime
+from flask import Flask, request, jsonify, Blueprint, json
 import uuid
+import datetime
 import re
+from database.db import DatabaseConnection
+from api.models import Order, User
+from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
+from werkzeug.security import generate_password_hash, check_password_hash
 
-orders = []
-users = []
 blueprint = Blueprint('application', __name__)
 
-@blueprint.route('/home')
-def index():
+db = DatabaseConnection()
+
+
+@blueprint.route('/')
+def home():
+
     return jsonify({
                 'message': 'Welcome to my SendIT web.'
             })
 
-@blueprint.route('/login', methods=['POST'])
+
+@blueprint.route('/auth/signup', methods=['POST'])
+def signup():
+    try:
+
+        data = request.get_json()
+
+        name = data.get('name')
+        email = data.get('email')
+        password = data.get('password')
+        userId = uuid.uuid4()
+        password_hash = generate_password_hash(password, method='sha256')
+
+        if not name or name.isspace() or not isinstance(
+                name, str):
+            return jsonify({
+                'message': 'name field can not be empty.'
+                }), 400
+
+        if not email or not re.match(
+                    r"[^@.]+@[A-Za-z]+\.[a-z]+", email):
+            return jsonify({
+                'message':
+                'The  email must be alphanumeric please!'
+            }), 400
+        elif len(password) < 4:
+            return jsonify({
+                'message': 
+                'Password must be at least 4 characters.'
+                }), 400
+        name_db = db.check_name(name)
+        email_db = db.check_email(email)
+        if name_db != None:
+            return jsonify({
+                'message':
+                'The name already has an account!'
+            }), 400
+        if email_db != None:
+            return jsonify({
+                'message':
+                'Email already registered!'
+            }), 400
+
+        db.insert_user(name, email, password)      
+        return jsonify({
+            'message': '{} has been registered succesfully.'.format(name)
+        }), 201
+    except ValueError:
+        return jsonify({
+            'message': 'Please try again.'
+            }), 400
+
+
+@blueprint.route('/auth/login', methods=['POST'])
 def login():
     try:
         data = request.get_json()
 
         name = data.get('name')
         password = data.get('password')
+        
+        if not name or name.isspace() or not isinstance(
+                name, str):
+            return jsonify({
+                'message': 'Enter a valid name.'
+            }), 400
+        elif not password or password.isspace():
+            return jsonify({
+                'message': 'Enter a valid password.'
+            }), 400
+        user = db.login(name)
+        access_token = create_access_token(identity=name)
+        return jsonify({
+            'token': access_token,
+            'message':
+            '{} has logged in.'.format(name)
+        }), 200
+    except ValueError:
+            return jsonify({
+                'message': 'provide correct credentials.'
+                }), 400
+
+
+@blueprint.route('/orders', methods=['POST'])
+@jwt_required
+def create_order():
+    """
+    Function adds a parcel delivery order to the database.
+   
+    """
+    try:
+        data = request.get_json()
+        name = get_jwt_identity()
+
+        destination = data.get('destination')
+        Pickup_location = data.get('pickup_location')
+=======
         user = ValidUser(name, password)
         if not user.valid_name():
             return jsonify({
@@ -55,18 +150,18 @@ def create_order():
         name = data.get('name')
         weight = data.get('weight')
         status = data.get('status')
-        date = data.get('date')
-        id = len(orders) + 1
+        date = datetime.datetime.utcnow()
+        present_location = data.get('present_location')
 
         order = Order(
-            destination, 
-            price, 
-            weight, 
-            pickup_location, 
-            id, 
-            name, 
-            status, 
-            date
+            destination,
+            price,
+            weight,
+            Pickup_location,
+            name,
+            status,
+            date,
+            present_location
             )
 
         if order.Valid_order() is False:
@@ -78,14 +173,16 @@ def create_order():
                 'message':
                 'The price and weight must be numbers please!'
             }), 400
-        orders.append(order.__dict__)
+
+        db.insert_order(destination, price, weight, Pickup_location,  name, status, present_location)
         return jsonify({
             'order': order.__dict__,
             'message': 'Order created successfully!'
         }), 201
     except ValueError:
         return jsonify({
-            'message': 'You are providing wrong inputs'
+
+            'message': 'Please provide right inputs'
         }), 400
 
 
@@ -94,40 +191,44 @@ def get_all_parcels():
     """
     function to enable a user fetch all his parcel orders
     :returns:
-    The entire list of parcel from the parcels.
+
+    The entire list of parcel from the parcels database.
     """
-    if len(orders) == 0:
+    parcels_db = db.fetch_all_orders()
+    if not parcels_db:
         return jsonify({
             'message': 'You havent created any order yet!'
         }), 400
     return jsonify({
-        'orders': orders
-    }), 200
+        'orders': parcels_db
+    }), 201
 
 
 @blueprint.route('/orders/<int:id>', methods=['GET'])
+@jwt_required
 def get_specific_parcel(id):
     """
-    Function to enable a registered 
+    Function to enable a registered
     user fetch a specific parcel details.
-    
     :params:
     :returns:
     The parcel order given the right id.
     """
+    name = get_jwt_identity()
     try:
-        if len(orders) == 0:
+        db = DatabaseConnection()
+        order = db.fetch_order(id)
+        if not order:
             return jsonify({
-                'message': 'you have not yet created orders yet!'
+                'message': 'you have no such order!'
             }), 404
-        order = orders[id - 1]
         return jsonify({
             'order': order,
             'message': 'parcel successfully found!'
         }), 200
-    except IndexError:
+    except TypeError:
         return jsonify({
-            'message': 'No such order in parcels!'
+            'message': 'Parcel id should be a number'
         }), 404
 
 
@@ -226,7 +327,6 @@ def get_user(id):
             'message': 'No such user in users!'
         }), 404
         
-
 
 
 
