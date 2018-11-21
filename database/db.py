@@ -10,13 +10,17 @@ class DatabaseConnection:
     def __init__(self):
 
         try:
+            # self.connection = psycopg2.connect(
+                # dbname = os.environ["DATABASE_URL"],
+            #     dbname='sendit',
+            #     user='sendit',
+            #     host='localhost',
+            #     password='beka',
+            #     port=5432
+            # )
             self.connection = psycopg2.connect(
                 # dbname = os.environ["DATABASE_URL"],
-                dbname='sendit',
-                user='sendit',
-                host='localhost',
-                password='beka',
-                port=5432
+                dbname='travis_ci_test'
             )
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
