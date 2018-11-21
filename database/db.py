@@ -31,7 +31,8 @@ class DatabaseConnection:
             present_location TEXT NOT NULL,
             date TIMESTAMP
                 );"""
-            create_user_table = """CREATE TABLE IF NOT EXISTS users(name TEXT NOT NULL,
+            create_user_table = """CREATE TABLE IF NOT EXISTS users(
+            name TEXT NOT NULL,
             email TEXT NOT NULL,
             password TEXT NOT NULL,
             userId SERIAL NOT NULL PRIMARY KEY,
@@ -75,7 +76,7 @@ class DatabaseConnection:
         """Method for adding a new user to users"""
         insert_user = """INSERT INTO users(
             name,
-            email, 
+            email,
             password
             ) VALUES('{}', '{}', '{}')""".format(name, email, password)
         pprint(insert_user)
@@ -169,4 +170,4 @@ class DatabaseConnection:
 
 if __name__ == '__main__':
     database_connection = DatabaseConnection()
-    database_connection.create_admin()                           
+    database_connection.create_admin()                        
