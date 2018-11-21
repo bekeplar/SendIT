@@ -83,3 +83,17 @@ class TestUsers(unittest.TestCase):
 
         self.assertEqual(message['message'], 'kalanzi has been registered succesfully.')
                         
+    def test_user_register_email_exists(self):
+        user = {
+            'name': 'Bekalaze',
+            'email': 'bekeplar@mail.com',
+            'password': 'bekeplax'
+        }
+        response = self.test_client.post(
+            'api/v1/auth/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['message'], 'Email already registered!')                    
