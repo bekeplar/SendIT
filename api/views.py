@@ -1,11 +1,11 @@
-from flask import Flask, request, jsonify, Blueprint, json
-import uuid
+from flask import Flask, request, jsonify, Blueprint
 import datetime
 import re
 from database.db import DatabaseConnection
 from api.models import Order, User
-from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token, JWTManager, jwt_required,
+get_jwt_identity
+from werkzeug.security import generate_password_hash
 
 blueprint = Blueprint('application', __name__)
 
@@ -18,6 +18,7 @@ def home():
                 'message': 'Welcome to my SendIT web.'
             })
 
+
 @blueprint.route('/auth/signup', methods=['POST'])
 def signup():
     try:
@@ -27,7 +28,6 @@ def signup():
         name = data.get('name')
         email = data.get('email')
         password = data.get('password')
-        userId = uuid.uuid4()
         password_hash = generate_password_hash(password, method='sha256')
 
         if not name or name.isspace() or not isinstance(
@@ -59,8 +59,7 @@ def signup():
                 'message':
                 'Email already registered!'
             }), 400
-
-        db.insert_user(name, email, password)      
+        db.insert_user(name, email, password_hash)
         return jsonify({
             'message': '{} has been registered succesfully.'.format(name)
         }), 201
@@ -68,6 +67,28 @@ def signup():
         return jsonify({
             'message': 'Please try again.'
             }), 400
+
+
+@blueprint.route('/auth/admin', methods=['PUT'])
+def set_admin(id):
+
+    data = request.get_json()['status']
+    try:
+        user = db.fetch_user(id)
+        if not user:
+            return jsonify({
+                'message': 'you have no such user!'
+            }), 404
+        else:
+            db.create_admin(id, data)
+            return jsonify({
+                "order": db.fetch_user(id),
+                "message": "Admin successfully created!"
+                }), 201
+    except ValueError:
+        return jsonify({
+            'message': 'Please provide right inputs'
+        }), 400
 
 
 @blueprint.route('/auth/login', methods=['POST'])
@@ -105,7 +126,6 @@ def login():
 def create_order():
     """
     Function adds a parcel delivery order to the database.
-   
     """
     try:
         data = request.get_json()
@@ -140,7 +160,14 @@ def create_order():
                 'message':
                 'The price and weight must be numbers please!'
             }), 400
-        db.insert_order(destination, price, weight, Pickup_location,  name, status, present_location)
+        db.insert_order(
+            destination,
+            price, weight,
+            Pickup_location,
+            name,
+            status,
+            present_location
+                )
         return jsonify({
             'order': order.__dict__,
             'message': 'Order created successfully!'
@@ -165,7 +192,7 @@ def get_all_parcels():
         }), 400
     return jsonify({
         'orders': parcels_db,
-        'message':'These are your parcels'
+        'message': 'These are your parcels'
     }), 201
 
 
@@ -209,7 +236,6 @@ def cancel_parcel(id):
     data = request.get_json()['status']
     name = get_jwt_identity()
     try:
-
         order = db.fetch_order(id)
         if not order:
             return jsonify({
@@ -219,11 +245,10 @@ def cancel_parcel(id):
             order = db.update_status(id, data)
             return jsonify({
                 "order": db.fetch_order(id),
-                "message":"parcel successfully cancelled!"
+                "message": "parcel successfully cancelled!"
                 }), 201
     except ValueError:
         return jsonify({
             'message': 'Please provide right inputs'
         }), 400
-                
 

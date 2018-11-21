@@ -31,7 +31,7 @@ class Order:
                 self.destination.isspace():
             return False
         else:
-            return True        
+            return True     
 
 
 class User:
