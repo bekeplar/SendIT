@@ -18,7 +18,6 @@ class DatabaseConnection:
                 # port=5432 
                 dbname='travis_ci_test'
             )
-            
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
 
