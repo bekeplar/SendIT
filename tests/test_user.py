@@ -120,4 +120,53 @@ class TestUsers(unittest.TestCase):
         )
         message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'], 'Bekalaze has logged in.')                     
+        self.assertEqual(message['message'], 'Bekalaze has logged in.')
+
+        def test_user_login_empty_password(self):
+            user_log = {
+                'name': 'Bekalaze',
+                'email': 'bekeplar@mail.com',
+                'password': 'bekeplax'
+                }
+        self.test_client.post(
+            'api/v1/auth/signup',
+            content_type='application/json',
+            data=json.dumps(user_log)
+        )
+        user = {
+            'name': 'Bekalaze',
+            'password': ''
+        }
+        response = self.test_client.post(
+            'api/v1/auth/login',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['message'], 'Enter a valid password.')
+                     
+    def test_user_login_empty_name(self):
+        user_log = {
+            'name': 'Bekalaze',
+            'email': 'bekeplar@mail.com',
+            'password': 'bekeplax'
+        }
+        self.test_client.post(
+            'api/v1/auth/signup',
+            content_type='application/json',
+            data=json.dumps(user_log)
+        )
+        user = {
+            'name': 'Bekalaze',
+            'password': ''
+        }
+        response = self.test_client.post(
+            'api/v1/auth/login',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['message'], 'Enter a valid name.')
+                 
