@@ -96,4 +96,28 @@ class TestUsers(unittest.TestCase):
         )
         message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'], 'Email already registered!')                    
+        self.assertEqual(message['message'], 'Email already registered!') 
+
+    def test_user_login(self):
+        user_signup = {
+            'name': 'Bekalaze',
+            'email': 'bekeplar@mail.com',
+            'password': 'bekeplax'
+        }
+        self.test_client.post(
+            'api/v1/auth/signup',
+            content_type='application/json',
+            data=json.dumps(user_signup)
+        )
+        user = {
+            'name': 'Bekalaze',
+            'password': 'bekeplax'
+        }
+        response = self.test_client.post(
+            'api/v1/auth/login',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['message'], 'Bekalaze has logged in.')                     
