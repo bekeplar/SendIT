@@ -1,6 +1,6 @@
 import unittest
 from api import app
-from flask import json
+from flask import json, jsonify
 from api.models import User
 
 
