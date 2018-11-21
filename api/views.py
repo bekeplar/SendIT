@@ -15,7 +15,7 @@ db = DatabaseConnection()
 def home():
     return jsonify({
                 'message': 'Welcome to my SendIT web.'
-            })
+            }), 200
 
 
 @blueprint.route('/auth/signup', methods=['POST'])
