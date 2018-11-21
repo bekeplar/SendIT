@@ -251,3 +251,33 @@ def cancel_parcel(id):
             'message': 'Please provide right inputs'
         }), 400
 
+
+@blueprint.route('/orders/<int:id>/destination', methods=['PUT'])
+@jwt_required
+def new_destination(id):
+    """
+    Function for a user to change the destination of  a specific parcel.
+    :params:
+    :returns:
+    Return message for successful change of destination.
+    """
+
+    data = request.get_json()['status']
+    name = get_jwt_identity()
+    try:
+
+        order = db.fetch_order(id)
+        if not order:
+            return jsonify({
+                'message': 'you have no such order!'
+            }), 404
+        else:
+            order = db.update_destination(id, data)
+            return jsonify({
+                "order": db.fetch_order(id),
+                "message": "destination successfully changed!"
+                }), 201
+    except ValueError:
+        return jsonify({
+            'message': 'Please provide right inputs'
+        }), 400
