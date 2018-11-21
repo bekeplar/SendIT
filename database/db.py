@@ -170,4 +170,4 @@ class DatabaseConnection:
 
 if __name__ == '__main__':
     database_connection = DatabaseConnection()
-    database_connection.create_admin()                        
+    database_connection.create_admin()                       
