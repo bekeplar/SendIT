@@ -169,4 +169,34 @@ class TestUsers(unittest.TestCase):
         message = json.loads(response.data.decode())
 
         self.assertEqual(message['message'], 'Enter a valid name.')
+
+    def test_user_register_password_length(self):
+        user = {
+            'name': 'Bekalaze3',
+            'email': 'bekeplar@gmal.com',
+            'password': 'bek'
+        }
+        response = self.test_client.post(
+            'api/v1/auth/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['message'], 'Password must be at least 4 characters.')    
                  
+     def test_user_register_successfully(self):
+        user = {
+            'name': 'Bekalaze3',
+            'email': 'bekeplar@gmal.com',
+            'password': 'bekeplax'
+        }
+        response = self.test_client.post(
+            'api/v1/auth/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(response.status_code, 200)
+             
