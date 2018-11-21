@@ -84,12 +84,12 @@ class DatabaseConnection:
 
     def create_admin(self, userId, admin):
         "Method to create an admin"
-        create_admin = """UPDATE  users SET admin='TRUE' WHERE id='1'"""
+        create_admin = """UPDATE  users SET admin='TRUE' WHERE userId='{}'""".format(admin, userId)
         pprint(create_admin)
         self.cursor.execute(create_admin)
 
     def update_destination(self, id, destination):
-        query = """UPDATE orders SET destination='{}' WHERE id='{}'""".format(
+        query = """UPDATE orders SET destination='{}' WHERE userId='{}'""".format(
             destination,
             id
             )
