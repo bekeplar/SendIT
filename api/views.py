@@ -261,7 +261,6 @@ def new_destination(id):
     :returns:
     Return message for successful change of destination.
     """
-
     data = request.get_json()['status']
     name = get_jwt_identity()
     try:
