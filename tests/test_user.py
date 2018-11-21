@@ -22,7 +22,7 @@ class TestUsers(unittest.TestCase):
         message = json.loads(response.data.decode())
         print(json.loads(response.data.decode()))
 
-        self.assertEqual(message['message'], 'The name already has an account!')
+        self.assertEqual(message['message'], 'Bekalaze3 has been registered successfully!')
 
     def test_user_register_empty_name(self):
         user = {
@@ -68,7 +68,7 @@ class TestUsers(unittest.TestCase):
         )
         message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'], 'The name already has an account!')
+        self.assertEqual(message['message'], 'Email already registered!')
 
     def test_email_cannot_register_twice(self):
         user = {
@@ -83,5 +83,5 @@ class TestUsers(unittest.TestCase):
         )
         message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'], 'Email already registered!')    
+        self.assertEqual(message['message'], 'Email already registered!')
                         
