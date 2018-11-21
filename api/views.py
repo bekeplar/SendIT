@@ -265,7 +265,6 @@ def new_destination(id):
     data = request.get_json()['status']
     name = get_jwt_identity()
     try:
-
         order = db.fetch_order(id)
         if not order:
             return jsonify({
