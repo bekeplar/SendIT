@@ -97,11 +97,8 @@ class DatabaseConnection:
 
     def update_present_location(self, id, present_location):
         """Method to change a parcels current location."""
-        query = """UPDATE orders SET present_location='{}' WHERE id='{}'"""
-        .format(
-            present_location,
-            id
-            )
+        query = """UPDATE orders SET present_location='{}' WHERE id='{}'""".format(
+            present_location, id)
         pprint(query)
         self.cursor.execute(query)
 
@@ -161,8 +158,7 @@ class DatabaseConnection:
         return user
 
     def update_status(self, id, status):
-        query = "UPDATE orders SET status='{}' WHERE id='{}'"
-        .format(status, id)
+        query = "UPDATE orders SET status='{}' WHERE id='{}'".format(status, id)
         pprint(query)
         self.cursor.execute(query)
 
