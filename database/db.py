@@ -11,13 +11,14 @@ class DatabaseConnection:
 
         try:
             self.connection = psycopg2.connect(
-                
-                os.getenv('DATABASECONNECTION')
+                # dbname='sendit',
+                # user='sendit',
+                # host='localhost',
+                # password='beka',
+                # port=5432 
+                dbname='travis_ci_test'
             )
-            # self.connection = psycopg2.connect(
-            # dbname = os.environ["DATABASE_URL"],
-            #     dbname='travis_ci_test'
-            # )
+            
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
 
@@ -170,4 +171,7 @@ class DatabaseConnection:
 
 if __name__ == '__main__':
     database_connection = DatabaseConnection()
-    database_connection.create_admin()                       
+    database_connection.create_admin()  
+# self.connection = psycopg2.connect(
+# dbname = os.environ["DATABASE_URL"],
+# dbname='travis_ci_test'                       
