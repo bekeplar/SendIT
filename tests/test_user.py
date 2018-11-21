@@ -159,7 +159,7 @@ class TestUsers(unittest.TestCase):
         )
         user = {
             'name': 'Bekalaze',
-            'password': ''
+            'password': 'bekeplax'
         }
         response = self.test_client.post(
             'api/v1/auth/login',
