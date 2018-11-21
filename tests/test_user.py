@@ -185,7 +185,8 @@ class TestUsers(unittest.TestCase):
 
         self.assertEqual(message['message'], 'Password must be at least 4 characters.')    
                  
-     def test_user_register_successfully(self):
+    def test_user_register_successfully(self):
+
         user = {
             'name': 'Bekalaze3',
             'email': 'bekeplar@gmal.com',
@@ -199,4 +200,4 @@ class TestUsers(unittest.TestCase):
         message = json.loads(response.data.decode())
 
         self.assertEqual(response.status_code, 200)
-             
+                
