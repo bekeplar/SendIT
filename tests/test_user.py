@@ -21,7 +21,7 @@ class TestUsers(unittest.TestCase):
         )
         message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'], 'Bekalaze3 has been registered successfully!')
+        self.assertEqual(message['message'], 'Bekalaze3 has been registered succesfully!')
 
     def test_user_register_empty_name(self):
         user = {
@@ -81,5 +81,5 @@ class TestUsers(unittest.TestCase):
         )
         message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'], 'Email already registered!')
+        self.assertEqual(message['message'], 'kalanzi has been registered succesfully!')
                         
