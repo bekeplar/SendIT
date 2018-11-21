@@ -11,12 +11,12 @@ class DatabaseConnection:
 
         try:
             self.connection = psycopg2.connect(
-                # dbname = os.environ["DATABASE_URL"],
-                dbname='sendit',
-                user='sendit',
-                host='localhost',
-                password='beka',
-                port=5432
+                # dbname='sendit',
+                # user='sendit',
+                # host='localhost',
+                # password='beka',
+                # port=5432 
+                dbname='travis_ci_test'
             )
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
@@ -84,12 +84,12 @@ class DatabaseConnection:
 
     def create_admin(self, userId, admin):
         "Method to create an admin"
-        create_admin = """UPDATE  users SET admin='TRUE' WHERE id='1'"""
+        create_admin = """UPDATE  users SET admin='TRUE' WHERE userId='{}'""".format(admin, userId)
         pprint(create_admin)
         self.cursor.execute(create_admin)
 
     def update_destination(self, id, destination):
-        query = """UPDATE orders SET destination='{}' WHERE id='{}'""".format(
+        query = """UPDATE orders SET destination='{}' WHERE userId='{}'""".format(
             destination,
             id
             )
@@ -170,4 +170,7 @@ class DatabaseConnection:
 
 if __name__ == '__main__':
     database_connection = DatabaseConnection()
-    database_connection.create_admin()                       
+    database_connection.create_admin()  
+# self.connection = psycopg2.connect(
+# dbname = os.environ["DATABASE_URL"],
+# dbname='travis_ci_test'                       
