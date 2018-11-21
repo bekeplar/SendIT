@@ -2,7 +2,7 @@
 SendIT is a courier service that helps users deliver parcels to different destinations. SendIT provides courier quotes based on weight categories.
 
 
-[![Build Status](https://travis-ci.org/bekeplar/SendIT.svg?branch=ft-user-cancel-parcel)](https://travis-ci.org/bekeplar/SendIT)
+[![Build Status](https://travis-ci.org/bekeplar/SendIT.svg?branch=develop)](https://travis-ci.org/bekeplar/SendIT)
 [![Maintainability](https://api.codeclimate.com/v1/badges/3572e2c0da5d9b0127e5/maintainability)](https://codeclimate.com/github/bekeplar/SendIT/maintainability)
 [![Coverage Status](https://coveralls.io/repos/github/bekeplar/SendIT/badge.svg?branch=ft-get-user)](https://coveralls.io/github/bekeplar/SendIT?branch=ft-get-user)
 

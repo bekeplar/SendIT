@@ -123,7 +123,7 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(message['message'], 'Bekalaze has logged in.')
 
         def test_user_login_empty_password(self):
-            user_log = {
+            user = {
                 'name': 'Bekalaze',
                 'email': 'bekeplar@mail.com',
                 'password': 'bekeplax'
@@ -131,7 +131,7 @@ class TestUsers(unittest.TestCase):
         self.test_client.post(
             'api/v1/auth/signup',
             content_type='application/json',
-            data=json.dumps(user_log)
+            data=json.dumps(user)
         )
         user = {
             'name': 'Bekalaze',
@@ -147,7 +147,7 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(message['message'], 'Enter a valid password.')
                      
     def test_user_login_empty_name(self):
-        user_log = {
+        user = {
             'name': 'Bekalaze',
             'email': 'bekeplar@mail.com',
             'password': 'bekeplax'
@@ -155,10 +155,10 @@ class TestUsers(unittest.TestCase):
         self.test_client.post(
             'api/v1/auth/signup',
             content_type='application/json',
-            data=json.dumps(user_log)
+            data=json.dumps(user)
         )
         user = {
-            'name': 'Bekalaze',
+            'name': '',
             'password': 'bekeplax'
         }
         response = self.test_client.post(
