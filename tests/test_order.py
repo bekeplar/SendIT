@@ -25,6 +25,6 @@ class TestOrder(unittest.TestCase):
             data=json.dumps(order)
         )
         access_token = json.loads(response.data.decode())
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 401)
 
      
