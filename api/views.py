@@ -39,7 +39,7 @@ def signup():
                     r"[^@.]+@[A-Za-z]+\.[a-z]+", email):
             return jsonify({
                 'message':
-                'The  email must be alphanumeric please!'
+                'The email must have mixed characters!'
             }), 400
         elif len(password) < 4:
             return jsonify({
@@ -69,19 +69,19 @@ def signup():
 
 
 @blueprint.route('/auth/admin/<int:id>', methods=['PUT'])
-def set_admin(id):
+def set_admin(userId):
 
     data = request.get_json()['admin']
     try:
-        user = db.fetch_user(id)
+        user = db.fetch_user(userId)
         if not user:
             return jsonify({
                 'message': 'you have no such user!'
             }), 404
         else:
-            db.create_admin(id, data)
+            db.create_admin(userId, data)
             return jsonify({
-                "order": db.fetch_user(id),
+                "order": db.fetch_user(userId),
                 "message": "Admin successfully created!"
                 }), 201
     except ValueError:
@@ -96,8 +96,7 @@ def login():
         data = request.get_json()
 
         name = data.get('name')
-        password = data.get('password')
-        
+        password = data.get('password')      
         if not name or name.isspace() or not isinstance(
                 name, str):
             return jsonify({
@@ -178,6 +177,7 @@ def create_order():
 
 
 @blueprint.route('/orders', methods=['GET'])
+@jwt_required
 def get_all_parcels():
     """
     function to enable a user fetch all his parcel orders
