@@ -58,7 +58,6 @@ class TestOrder(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(user)
         )
-        access_token = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 200)
 
         order = dict(
