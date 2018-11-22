@@ -78,5 +78,11 @@ class TestOrder(unittest.TestCase):
             data=json.dumps(order)
         )
         message = json.loads(response.data.decode())
-        self.assertEqual(response.status_code, 400)    
+        self.assertEqual(response.status_code, 400)  
+
+    def test_cancel_parcel(self):
+        token = self.get_token()
+        response = self.client.post('/api/v1/orders', headers={'Authorization': 'Bearer ' + token})
+        response2 = self.client.put('/api/v1/orders/<int:id>', headers={'Authorization': 'Bearer ' + token})
+        assert response2.status_code == 404      
      
