@@ -86,9 +86,9 @@ class DatabaseConnection:
 
     def create_admin(self, userId, admin):
         "Method to create an admin"
-        create_admin = """UPDATE  users SET admin='TRUE' WHERE userId='{}'""".format(admin, userId)
-        pprint(create_admin)
-        self.cursor.execute(create_admin)
+        query = """UPDATE  users SET admin='{}' WHERE userId='{}'""".format(True, userId)
+        pprint(query)
+        self.cursor.execute(query)
 
     def update_destination(self, id, destination):
         query = """UPDATE orders SET destination='{}' WHERE userId='{}'""".format(
@@ -172,7 +172,6 @@ class DatabaseConnection:
 
 if __name__ == '__main__':
     database_connection = DatabaseConnection()
-    database_connection.create_admin()  
 # self.connection = psycopg2.connect(
 # dbname = os.environ["DATABASE_URL"]
 # dbname='travis_ci_test'                       

@@ -7,6 +7,7 @@ from database.db import DatabaseConnection
 class TestOrder(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client(self)
+        self.db = DatabaseConnection()
 
     def test_create_order(self):
         """Test the method to add an order"""
@@ -77,5 +78,5 @@ class TestOrder(unittest.TestCase):
             data=json.dumps(order)
         )
         message = json.loads(response.data.decode())
-        self.assertEqual(message['message'], 'oredr created successfully.')    
+        self.assertEqual(response.status_code, 400)    
      

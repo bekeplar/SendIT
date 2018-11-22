@@ -2,8 +2,11 @@ from flask import Flask, request, jsonify, Blueprint
 import datetime
 import re
 from database.db import DatabaseConnection
+from flasgger import swag_from
 from api.models import Order, User
-from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
+from flask_jwt_extended import(create_access_token,
+JWTManager, jwt_required, get_jwt_identity
+)
 from werkzeug.security import generate_password_hash
 
 blueprint = Blueprint('application', __name__)
@@ -17,7 +20,7 @@ def home():
                 'message': 'Welcome to my SendIT web.'
             }), 200
 
-
+@swag_from('../signup.yml')
 @blueprint.route('/auth/signup', methods=['POST'])
 def signup():
     try:
@@ -139,6 +142,10 @@ def create_order():
     try:
         data = request.get_json()
         name = get_jwt_identity()
+        if name['admin'] != True:
+            return jsonify({
+                'message':'Welcome to the users dashboard'
+            })
 
         destination = data.get('destination')
         Pickup_location = data.get('pickup_location')
@@ -250,6 +257,10 @@ def cancel_parcel(id):
     data = request.get_json()['status']
     name = get_jwt_identity()
     try:
+        if name['admin'] == False:
+            return jsonify({
+                'message': 'Not authorized!'
+            }), 503
         new_status = ['cancelled']
         order = db.fetch_order(id)
         if not order:
@@ -281,8 +292,12 @@ def new_destination(id):
     :returns:
     Return message for successful change of destination.
     """
-    data = request.get_json()['destination']
     name = get_jwt_identity()
+    if name['admin'] == False:
+            return jsonify({
+                'message': 'Not authorized!'
+            }), 503
+    data = request.get_json()['destination']
     try:
 
         order = db.fetch_order(id)
@@ -311,9 +326,12 @@ def new_location(id):
     :returns:
     Return message for successful change of destination.
     """
-
-    data = request.get_json()['present_location']
     name = get_jwt_identity()
+    if name['admin'] == False:
+            return jsonify({
+                'message': 'Not authorized!'
+            }), 503
+    data = request.get_json()['present_location']
     try:
 
         order = db.fetch_order(id)
