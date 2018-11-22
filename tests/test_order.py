@@ -2,7 +2,7 @@ import unittest
 from api import app
 from flask import json, jsonify
 from api.models import Order
-
+from database.db import DatabaseConnection
 
 class TestOrder(unittest.TestCase):
     def setUp(self):
@@ -23,8 +23,28 @@ class TestOrder(unittest.TestCase):
             '/api/v1/orders',
             content_type='application/json',
             data=json.dumps(order)
+            headers={'Authorization':'Bearer {}'}
         )
         access_token = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 401)
 
+
+    def test_create_order_with_empty_inputs(self):
+        """Test the method to add an order"""
+        order = dict(
+        destination='',
+        date='23-11-2018',
+        Pickup_location='',
+        price=80000,
+        weight=75,
+        name='',
+        present_location='Namanve'
+        )
+        response = self.client.post(
+            '/api/v1/orders',
+            content_type='application/json',
+            data=json.dumps(order)
+        )
+        access_token = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 401)
      

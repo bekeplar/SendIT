@@ -2,6 +2,8 @@ import unittest
 from api import app
 from flask import json, jsonify
 from api.models import User
+from database.db import DatabaseConnection
+
 
 
 class TestUsers(unittest.TestCase):
@@ -51,8 +53,7 @@ class TestUsers(unittest.TestCase):
         )
         message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'],
-                         'The email must have mixed characters!') 
+        self.assertEqual(message['message'],'The email must have mixed characters!') 
 
     def test_user_cannot_register_twice(self):
         user = {
