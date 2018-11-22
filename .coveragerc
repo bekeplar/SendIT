@@ -11,9 +11,9 @@ omit =
     */venv/*
     */__pycache/*
     */.pytest_cache/*
-    api/models/*
+    */api/models.py
     *validate/*
-
+    */database/db.py
 exclude_lines =
     pragma: no cover
     def index
