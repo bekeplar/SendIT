@@ -53,7 +53,8 @@ class TestUsers(unittest.TestCase):
         )
         message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'],'The email must have mixed characters!') 
+        self.assertEqual(message['message'],
+'The email must have mixed characters!') 
 
     def test_user_cannot_register_twice(self):
         user = {
@@ -201,4 +202,29 @@ class TestUsers(unittest.TestCase):
         message = json.loads(response.data.decode())
 
         self.assertEqual(response.status_code, 400)
+
+
+    def test_user_login_empty_fields(self):
+        user = {
+            'name': '',
+            'email': '',
+            'password': ''
+        }
+        self.test_client.post(
+            'api/v1/auth/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+        user = {
+            'name': '',
+            'password': 'bekeplax'
+        }
+        response = self.test_client.post(
+            'api/v1/auth/login',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['message'], 'Enter a valid name.')     
                 
