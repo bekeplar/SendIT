@@ -73,7 +73,6 @@ class TestOrder(unittest.TestCase):
             
         response = self.client.post(
             'api/v1/orders',
-            headers={'Authorization': 'Bearer ' + access_token['token']},
             content_type='application/json',
             data=json.dumps(order)
         )
