@@ -48,7 +48,7 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(response.status_code, 401)
 
 
-    def test_create_new_order(self):
+    def test_caanot_create_new_order_if_not_user(self):
         user = {
             'name': 'Bekalaze',
             'password': 'bekeplax'
@@ -58,7 +58,7 @@ class TestOrder(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(user)
         )
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 500)
 
         order = dict(
 
