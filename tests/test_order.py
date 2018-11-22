@@ -46,4 +46,38 @@ class TestOrder(unittest.TestCase):
         )
         access_token = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 401)
+
+
+    def test_create_new_order(self):
+        user = {
+            'name': 'Bekalaze',
+            'password': 'bekeplax'
+        }
+        response = self.client.post(
+            'api/v1/auth/login',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+        access_token = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 200)
+
+        order = dict(
+
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=80000,
+            weight=75,
+            name='Bekalaze',
+            present_location='Namanve'
+        ) 
+            
+        response = self.client.post(
+            'api/v1/orders',
+            headers={'Authorization': 'Bearer ' + access_token['token']},
+            content_type='application/json',
+            data=json.dumps(order)
+        )
+        message = json.loads(response.data.decode())
+        self.assertEqual(message['message'], 'oredr created successfully.')    
      

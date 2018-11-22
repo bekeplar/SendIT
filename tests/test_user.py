@@ -226,5 +226,8 @@ class TestUsers(unittest.TestCase):
         )
         message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'], 'Enter a valid name.')     
+        self.assertEqual(message['message'], 'Enter a valid name.') 
+
+        def tearDown(self):
+            self.test_client = app.test_client(self)    
                 
