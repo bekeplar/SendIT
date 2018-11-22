@@ -23,7 +23,6 @@ class TestOrder(unittest.TestCase):
             '/api/v1/orders',
             content_type='application/json',
             data=json.dumps(order)
-            headers={'Authorization':'Bearer {}'}
         )
         access_token = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 401)
