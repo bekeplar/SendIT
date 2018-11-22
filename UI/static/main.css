@@ -1,8 +1,10 @@
 body {
     font-size: 14px;
     font-family:  Helvetica, sans-serif;
-    background: url("../static/images/right.jpg" );
+    background-color:rgb(250, 137, 156); 
+
     background-size: cover;
+    -webkit-filter: brightness(0.8);
     filter: grayscale(10%);
     background-repeat:no-repeat;  
     min-width: 100%;
@@ -199,10 +201,7 @@ legend {
     color: aqua;   
 }
 
-#TD{
-    
-    
-}
+
 .me{
     width: 50%;
     background-color: antiquewhite;
@@ -230,7 +229,7 @@ legend {
 }
 .left a{
     color: aqua;
-    text-decoration: none;
+    text-decoration: underline;
 } 
 .left a:hover{
     color: green;
@@ -281,9 +280,6 @@ table{
 }
 @media only screen and (max-width: 768px) {
     /* For mobile phones: */
-    table {
-       
-    }
 }
 table th{
     border: 1px solid white;
