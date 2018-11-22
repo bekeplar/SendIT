@@ -28,7 +28,11 @@ def signup():
         email = data.get('email')
         password = data.get('password')
         password_hash = generate_password_hash(password, method='sha256')
-
+        keys = ('name', 'email', 'password')
+        if not set(keys).issubset(set(data)):
+            return jsonify({
+                'message': 'Missing input fields!.'
+                }), 400
         if not name or name.isspace() or not isinstance(
                 name, str):
             return jsonify({
@@ -41,10 +45,10 @@ def signup():
                 'message':
                 'The email must have mixed characters!'
             }), 400
-        elif len(password) < 4:
+        elif len(password) < 8:
             return jsonify({
                 'message': 
-                'Password must be at least 4 characters.'
+                'Password must be at least 8 characters.'
                 }), 400
         name_db = db.check_name(name)
         email_db = db.check_email(email)
@@ -96,7 +100,12 @@ def login():
         data = request.get_json()
 
         name = data.get('name')
-        password = data.get('password')      
+        password = data.get('password')
+        keys = ('name','password')
+        if not set(keys).issubset(set(data)):
+            return jsonify({
+                'message': 'Missing input fields!.'
+                }), 400      
         if not name or name.isspace() or not isinstance(
                 name, str):
             return jsonify({
@@ -107,7 +116,9 @@ def login():
                 'message': 'Enter a valid password.'
             }), 400
         user = db.login(name)
-        access_token = create_access_token(identity=name)
+        current_user = dict(name=name, role=user[4])
+        access_token = create_access_token(identity=current_user,
+        expires_delta=datetime.timedelta(minutes=2880))
         return jsonify({
             'token': access_token,
             'message':
@@ -148,7 +159,11 @@ def create_order():
             date,
             present_location
             )
-
+        keys = ('destination', 'price', 'weight', 'Pickup_location', 'name', 'status','present_location')
+        if not set(keys).issubset(set(data)):
+            return jsonify({
+                'message': 'Missing input fields!.'
+                }), 400
         if order.Valid_order() is False:
             return jsonify({
                 'message': 'Please fill all input fields!'
@@ -235,12 +250,17 @@ def cancel_parcel(id):
     data = request.get_json()['status']
     name = get_jwt_identity()
     try:
+        new_status = ['cancelled']
         order = db.fetch_order(id)
         if not order:
             return jsonify({
                 'message': 'you have no such order!'
-            }), 404
+            }), 404    
         else:
+            if new_status not in data:
+                return jsonify({
+                    "message": 'You can only cancel a parcel'
+                })
             order = db.update_status(id, data)
             return jsonify({
                 "order": db.fetch_order(id),

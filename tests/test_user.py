@@ -36,7 +36,7 @@ class TestUsers(unittest.TestCase):
         )
         message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'], 'name field can not be empty.')
+        self.assertEqual(message['message'], 'Missing input fields!.')
 
     def test_user_register_empty_password(self):
         user = {
@@ -183,7 +183,7 @@ class TestUsers(unittest.TestCase):
         )
         message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'], 'Password must be at least 4 characters.')    
+        self.assertEqual(message['message'], 'Password must be at least 8 characters.')    
                  
     def test_user_not_register_successfully(self):
 
