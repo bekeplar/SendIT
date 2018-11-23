@@ -91,12 +91,12 @@ Use the following sample data
 orders = [
     {
         'destination': 'Mukono',
-        'date': '23-11-2018',
         'Pickup_location': 'Nakawa',
         'price': 80000,
         'weight': 75,
         'name': 'Bekalaze',
-        'id': 1
+        'status': 'pending',
+        'present_location': 'Banda'
     }
 ]
 
