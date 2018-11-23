@@ -136,7 +136,7 @@ class TestOrder(unittest.TestCase):
 
         reply = json.loads(response.data.decode())
 
-        self.assertEqual(reply['message'], 'Missing input fields!')
+        self.assertEqual(reply['message'], 'Missing input fields!.')
         
 
     def test_create_order_missing_fields(self):
@@ -162,7 +162,7 @@ class TestOrder(unittest.TestCase):
 
         reply = json.loads(response.data.decode())
 
-        self.assertEqual(reply['message'],'Missing input fields!')
+        self.assertEqual(reply['message'],'Missing input fields!.')
         self.assertEqual(response.status_code, 400)
 
     def test_price_must_be_number(self):
@@ -189,7 +189,7 @@ class TestOrder(unittest.TestCase):
         reply = json.loads(response.data.decode())
 
         self.assertEqual(reply['message'],
-                         'Missing input fields!')
+                         'Missing input fields!.')
         self.assertEqual(response.status_code, 400)
 
     def test_get_all_parcels(self):
