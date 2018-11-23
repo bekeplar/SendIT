@@ -10,7 +10,7 @@ class TestUsers(unittest.TestCase):
     def setUp(self):
         self.test_client = app.test_client(self)
         self.db = DatabaseConnection()
-
+     
     def test_user_register(self):
         user = {
             'name': 'Bekalaze3',

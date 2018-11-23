@@ -210,7 +210,7 @@ def get_all_parcels():
     if not parcels_db:
         return jsonify({
             'message': 'You havent created any order yet!'
-        }), 400
+        }), 404
     return jsonify({
         'orders': parcels_db,
         'message': 'These are your parcels'
@@ -230,7 +230,18 @@ def get_specific_parcel(id):
     name = get_jwt_identity()
     try:
         db = DatabaseConnection()
+        parcels_db = db.fetch_all_orders
         order = db.fetch_order(id)
+        if not id or id.isspace() or not isinstance(
+                id, int):
+            return jsonify({
+                'message': 'Order id must be a number!'
+                }), 400        
+        if not parcels_db:
+            return jsonify({
+            'message': 'You havent created any order yet!'
+        }), 400
+
         if not order:
             return jsonify({
                 'message': 'you have no such order!'
@@ -261,6 +272,11 @@ def cancel_parcel(id):
             return jsonify({
                 'message': 'Not authorized!'
             }), 503
+        if not id or id.isspace() or not isinstance(
+                id, int):
+            return jsonify({
+                'message': 'Order id must be a number!'
+                }), 400    
         new_status = ['cancelled']
         order = db.fetch_order(id)
         if not order:
@@ -305,11 +321,21 @@ def new_destination(id):
             return jsonify({
                 'message': 'you have no such order!'
             }), 404
+        if not id or id.isspace() or not isinstance(
+                id, int):
+            return jsonify({
+                'message': 'Order id must be a number!'
+                }), 400        
+        parcels_db = db.fetch_all_orders()    
+        if not parcels_db:
+            return jsonify({
+            'message': 'You havent created any order yet!'
+        }), 400    
         else:
             order = db.update_destination(id, data)
             return jsonify({
                 "order": db.fetch_order(id),
-                "message": "destination successfully changed!"
+                "message": "destination successfully updated!"
                 }), 201
     except ValueError:
         return jsonify({
@@ -339,6 +365,11 @@ def new_location(id):
             return jsonify({
                 'message': 'you have no such order!'
             }), 404
+        if not id or id.isspace() or not isinstance(
+                id, int):
+            return jsonify({
+                'message': 'Order id must be a number!'
+                }), 400        
         else:
             order = db.update_present_location(id, data)
             return jsonify({
