@@ -82,7 +82,7 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(response.status_code, 401)
 
 
-    def test_caanot_create_new_order_if_not_user(self):
+    def test_can_create_new_order_if_user(self):
         user = {
             'name': 'Bekalaze',
             'password': 'bekeplax'
@@ -92,7 +92,7 @@ class TestOrder(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(user)
         )
-        self.assertEqual(response.status_code, 500)
+        self.assertEqual(response.status_code, 200)
 
         order = dict(
 
@@ -153,7 +153,7 @@ class TestOrder(unittest.TestCase):
             name='Bekalaze',
             present_location='Namanve'
         )
-        response = self.tester.post(
+        response = self.client.post(
             '/api/v1/orders',
             content_type='application/json',
             data=json.dumps(order),
@@ -179,7 +179,7 @@ class TestOrder(unittest.TestCase):
             name='Bekalaze',
             present_location='Namanve'
         )
-        response = self.tester.post(
+        response = self.client.post(
             '/api/v1/orders',
             content_type='application/json',
             data=json.dumps(order),
@@ -284,7 +284,7 @@ class TestOrder(unittest.TestCase):
         reply = self.login_user()
         token = reply['token']
 
-        self.assertEqual(reply['message'], 'Order created successfully!')
+        self.assertEqual(reply['message'], 'Bekalaze has logged in.')
 
         response = self.client.get(
             '/api/v1/orders/xxx1',
@@ -301,7 +301,7 @@ class TestOrder(unittest.TestCase):
         """Test that a user cannot view a parcel from an empty list"""
         reply = self.login_user()
 
-        self.assertEqual(reply['message'], 'Logged in!')
+        self.assertEqual(reply['message'], 'Bekalaze has logged in.')
 
         token = reply['token']
 
@@ -555,7 +555,7 @@ class TestOrder(unittest.TestCase):
         reply = self.login_user()
         token = reply['token']
 
-        reply = self.create_parcel()
+        reply = self.create_order()
 
         self.assertEqual(reply['message'], 'Order created successfully!')
 
@@ -576,7 +576,7 @@ class TestOrder(unittest.TestCase):
 
         reply = self.create_order()
 
-        self.assertEqual(reply['message'], 'Order created successfully!')
+        self.assertEqual(reply.status_code, 400)
 
         response = self.client.put(
             '/api/v1/orders/xxx',
@@ -590,6 +590,7 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
 
     def tearDown(self):
-        self.db.drop_table('orders')
-        self.db.drop_table('users')
+        self.client = app.test_client(self)
+        self.db = DatabaseConnection()  
+        
 
