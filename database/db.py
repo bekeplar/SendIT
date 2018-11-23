@@ -11,13 +11,13 @@ class DatabaseConnection:
 
         try:
             self.connection = psycopg2.connect(
-                #dbname='sendit',
-                #user='sendit',
-                #host='localhost',
-                #password='beka',
-                #port=5432 
+                dbname='sendit',
+                user='sendit',
+                host='localhost',
+                password='beka',
+                port=5432 
                 #"postgres://udrznhylrwogip:a28046d3c2712824381d7e7d9e98c1992c31a13c0b6b12efe8cbc19475dfda43@ec2-23-23-101-25.compute-1.amazonaws.com:5432/dd0dhcjt1ve70h"
-                dbname='travis_ci_test'
+                #dbname='travis_ci_test'
                  )
                  
             self.connection.autocommit = True
@@ -91,7 +91,7 @@ class DatabaseConnection:
         self.cursor.execute(query)
 
     def update_destination(self, id, destination):
-        query = """UPDATE orders SET destination='{}' WHERE userId='{}'""".format(
+        query = """UPDATE orders SET destination='{}' WHERE id='{}'""".format(
             destination,
             id
             )

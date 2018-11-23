@@ -20,7 +20,7 @@ def home():
                 'message': 'Welcome to my SendIT web.'
             }), 200
 
-@swag_from('../signup.yml')
+@swag_from('docs/signup.yml')
 @blueprint.route('/auth/signup', methods=['POST'])
 def signup():
     try:
@@ -141,7 +141,7 @@ def create_order():
     try:
         data = request.get_json()
         name = get_jwt_identity()
-        if name['admin'] != True:
+        if name[-1] == True:
             return jsonify({
                 'message':'Welcome to the users dashboard'
             })
@@ -231,11 +231,7 @@ def get_specific_parcel(id):
         db = DatabaseConnection()
         parcels_db = db.fetch_all_orders
         order = db.fetch_order(id)
-        if not id or id.isspace() or not isinstance(
-                id, int):
-            return jsonify({
-                'message': 'Order id must be a number!'
-                }), 400        
+        
         if not parcels_db:
             return jsonify({
             'message': 'You havent created any order yet!'
@@ -267,26 +263,12 @@ def cancel_parcel(id):
     data = request.get_json()['status']
     name = get_jwt_identity()
     try:
-        if name['admin'] == False:
-            return jsonify({
-                'message': 'Not authorized!'
-            }), 503
-        if not id or id.isspace() or not isinstance(
-                id, int):
-            return jsonify({
-                'message': 'Order id must be a number!'
-                }), 400    
-        new_status = ['cancelled']
         order = db.fetch_order(id)
         if not order:
             return jsonify({
                 'message': 'you have no such order!'
-            }), 404    
+            }), 404
         else:
-            if new_status not in data:
-                return jsonify({
-                    "message": 'You can only cancel a parcel'
-                })
             order = db.update_status(id, data)
             return jsonify({
                 "order": db.fetch_order(id),
@@ -296,6 +278,7 @@ def cancel_parcel(id):
         return jsonify({
             'message': 'Please provide right inputs'
         }), 400
+
 
 
 @blueprint.route('/orders/<int:id>/destination', methods=['PUT'])
@@ -308,7 +291,7 @@ def new_destination(id):
     Return message for successful change of destination.
     """
     name = get_jwt_identity()
-    if name['admin'] == False:
+    if name[-1] == False:
             return jsonify({
                 'message': 'Not authorized!'
             }), 503
@@ -320,27 +303,16 @@ def new_destination(id):
             return jsonify({
                 'message': 'you have no such order!'
             }), 404
-        if not id or id.isspace() or not isinstance(
-                id, int):
-            return jsonify({
-                'message': 'Order id must be a number!'
-                }), 400        
-        parcels_db = db.fetch_all_orders()    
-        if not parcels_db:
-            return jsonify({
-            'message': 'You havent created any order yet!'
-        }), 400    
         else:
             order = db.update_destination(id, data)
             return jsonify({
                 "order": db.fetch_order(id),
-                "message": "destination successfully updated!"
+                "message": "destination successfully changed!"
                 }), 201
     except ValueError:
         return jsonify({
             'message': 'Please provide right inputs'
         }), 400
-
 
 @blueprint.route('/orders/<int:id>/PresentLocation', methods=['PUT'])
 @jwt_required
@@ -352,7 +324,7 @@ def new_location(id):
     Return message for successful change of destination.
     """
     name = get_jwt_identity()
-    if name['admin'] == False:
+    if name[-1] == False:
             return jsonify({
                 'message': 'Not authorized!'
             }), 503
@@ -363,12 +335,7 @@ def new_location(id):
         if not order:
             return jsonify({
                 'message': 'you have no such order!'
-            }), 404
-        if not id or id.isspace() or not isinstance(
-                id, int):
-            return jsonify({
-                'message': 'Order id must be a number!'
-                }), 400        
+            }), 404     
         else:
             order = db.update_present_location(id, data)
             return jsonify({
