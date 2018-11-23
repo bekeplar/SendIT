@@ -7,7 +7,7 @@ from database.db import DatabaseConnection
 class TestOrder(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client(self)
-        self.db = DatabaseConnection()
+        self.db = DatabaseConnection()   
 
     def login_user(self):
         """Helper method in logging in"""
@@ -22,6 +22,25 @@ class TestOrder(unittest.TestCase):
         )
         reply = json.loads(response.data.decode())
         return reply    
+    def create_order(self):
+        """Method to call when creating orders.""" 
+        reply = self.login_user()
+        token = reply ['token']
+        order = dict(
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price='xxc',
+            weight='nnn',
+            name='Bekalaze',
+            present_location='Namanve'
+        )
+        response = self.client.post(
+            '/api/v1/orders',
+            content_type='application/json',
+            data=json.dumps(order),
+            headers={'Authorization': 'Bearer {}'.format(token)}
+        )
 
     def test_create_order(self):
         """Test the method to add an order"""
@@ -94,7 +113,7 @@ class TestOrder(unittest.TestCase):
         message = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 400)  
 
-    def test_create_order(self):
+    def test_create_new_order(self):
         """Test that a user can create a parcel"""
         reply = self.login_user()
         token = reply['token']
@@ -265,9 +284,7 @@ class TestOrder(unittest.TestCase):
         reply = self.login_user()
         token = reply['token']
 
-        reply = self.create_order()
-
-        self.assertEqual(reply['message'], 'Product added successfully!')
+        self.assertEqual(reply['message'], 'Order created successfully!')
 
         response = self.client.get(
             '/api/v1/orders/xxx1',
@@ -288,7 +305,7 @@ class TestOrder(unittest.TestCase):
 
         token = reply['token']
 
-        response = self.tester.get(
+        response = self.client.get(
             '/api/v1/orders/1',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
