@@ -524,7 +524,7 @@ class TestOrder(unittest.TestCase):
         token = reply['token']
 
         response = self.client.put(
-            '/api/v1/orders/1',
+            '/api/v1/parcels/1',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
 
@@ -540,7 +540,7 @@ class TestOrder(unittest.TestCase):
         token = reply['token']
 
         response = self.client.put(
-            '/api/v1/orders/3',
+            '/api/v1/parcels/3',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
 
@@ -560,7 +560,7 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(reply['message'], 'Order created successfully!')
 
         response = self.client.delete(
-            '/api/v1/orders/8',
+            '/api/v1/parcels/8',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
 
@@ -579,7 +579,7 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(reply.status_code, 400)
 
         response = self.client.put(
-            '/api/v1/orders/xxx',
+            '/api/v1/parcels/xxx',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
 

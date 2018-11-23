@@ -132,7 +132,7 @@ def login():
                 }), 400
 
 
-@blueprint.route('/orders', methods=['POST'])
+@blueprint.route('/parcels', methods=['POST'])
 @jwt_required
 def create_order():
     """
@@ -197,7 +197,7 @@ def create_order():
         }), 400
 
 
-@blueprint.route('/orders', methods=['GET'])
+@blueprint.route('/parcels', methods=['GET'])
 @jwt_required
 def get_all_parcels():
     """
@@ -213,10 +213,10 @@ def get_all_parcels():
     return jsonify({
         'orders': parcels_db,
         'message': 'These are your parcels'
-    }), 201
+    }), 200
 
 
-@blueprint.route('/orders/<int:id>', methods=['GET'])
+@blueprint.route('/parcels/<int:id>', methods=['GET'])
 @jwt_required
 def get_specific_parcel(id):
     """
@@ -251,7 +251,7 @@ def get_specific_parcel(id):
         }), 404
 
 
-@blueprint.route('/orders/<int:id>', methods=['PUT'])
+@blueprint.route('/parcels/<int:id>', methods=['PUT'])
 @jwt_required
 def cancel_parcel(id):
     """
@@ -273,7 +273,7 @@ def cancel_parcel(id):
             return jsonify({
                 "order": db.fetch_order(id),
                 "message": "parcel successfully cancelled!"
-                }), 201
+                }), 200
     except ValueError:
         return jsonify({
             'message': 'Please provide right inputs'
@@ -281,7 +281,7 @@ def cancel_parcel(id):
 
 
 
-@blueprint.route('/orders/<int:id>/destination', methods=['PUT'])
+@blueprint.route('/parcels/<int:id>/destination', methods=['PUT'])
 @jwt_required
 def new_destination(id):
     """
@@ -308,13 +308,13 @@ def new_destination(id):
             return jsonify({
                 "order": db.fetch_order(id),
                 "message": "destination successfully changed!"
-                }), 201
+                }), 200
     except ValueError:
         return jsonify({
             'message': 'Please provide right inputs'
         }), 400
 
-@blueprint.route('/orders/<int:id>/PresentLocation', methods=['PUT'])
+@blueprint.route('/parcel/<int:id>/PresentLocation', methods=['PUT'])
 @jwt_required
 def new_location(id):
     """
@@ -337,11 +337,11 @@ def new_location(id):
                 'message': 'you have no such order!'
             }), 404     
         else:
-            order = db.update_present_location(id, data)
+            parcel = db.update_present_location(id, data)
             return jsonify({
-                "order": db.fetch_order(id),
+                "parcel": db.fetch_order(id),
                 "message": "Location successfully updated!"
-                }), 201
+                }), 200
     except ValueError:
         return jsonify({
             'message': 'Please provide right inputs'
