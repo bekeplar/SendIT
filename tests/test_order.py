@@ -36,7 +36,7 @@ class TestOrder(unittest.TestCase):
             present_location='Namanve'
         )
         response = self.client.post(
-            '/api/v1/orders',
+            '/api/v1/parcels',
             content_type='application/json',
             data=json.dumps(order),
             headers={'Authorization': 'Bearer {}'.format(token)}
@@ -54,7 +54,7 @@ class TestOrder(unittest.TestCase):
         present_location='Namanve'
         )
         response = self.client.post(
-            '/api/v1/orders',
+            '/api/v1/parcels',
             content_type='application/json',
             data=json.dumps(order)
         )
@@ -74,7 +74,7 @@ class TestOrder(unittest.TestCase):
         present_location='Namanve'
         )
         response = self.client.post(
-            '/api/v1/orders',
+            '/api/v1/parcels',
             content_type='application/json',
             data=json.dumps(order)
         )
@@ -106,7 +106,7 @@ class TestOrder(unittest.TestCase):
         ) 
             
         response = self.client.post(
-            'api/v1/orders',
+            'api/v1/parcels',
             content_type='application/json',
             data=json.dumps(order)
         )
@@ -128,7 +128,7 @@ class TestOrder(unittest.TestCase):
             present_location='Namanve'
         )
         response = self.client.post(
-            '/api/v1/orders',
+            '/api/v1/parcels',
             content_type='application/json',
             data=json.dumps(order),
             headers={'Authorization': 'Bearer {}'.format(token)}
@@ -154,7 +154,7 @@ class TestOrder(unittest.TestCase):
             present_location='Namanve'
         )
         response = self.client.post(
-            '/api/v1/orders',
+            '/api/v1/parcels',
             content_type='application/json',
             data=json.dumps(order),
             headers={'Authorization': 'Bearer {}'.format(token)}
@@ -180,7 +180,7 @@ class TestOrder(unittest.TestCase):
             present_location='Namanve'
         )
         response = self.client.post(
-            '/api/v1/orders',
+            '/api/v1/parcels',
             content_type='application/json',
             data=json.dumps(order),
             headers={'Authorization': 'Bearer {}'.format(token)}
@@ -211,7 +211,7 @@ class TestOrder(unittest.TestCase):
         )
 
         response = self.tester.get(
-            '/api/v1/orders',
+            '/api/v1/parcels',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
 
@@ -225,7 +225,7 @@ class TestOrder(unittest.TestCase):
         token = reply['token']
 
         response = self.client.get(
-            '/api/v1/orders',
+            '/api/v1/parcels',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
 
@@ -253,7 +253,7 @@ class TestOrder(unittest.TestCase):
         )
 
         response = self.client.get(
-            '/api/v1/orders/1',
+            '/api/v1/parcels/1',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
 
@@ -270,7 +270,7 @@ class TestOrder(unittest.TestCase):
         reply = self.create_order()
 
         response = self.client.get(
-            '/api/v1/orders/2',
+            '/api/v1/parcels/2',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
 
@@ -287,7 +287,7 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(reply['message'], 'Bekalaze has logged in.')
 
         response = self.client.get(
-            '/api/v1/orders/xxx1',
+            '/api/v1/parcels/xxx1',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
 
@@ -306,7 +306,7 @@ class TestOrder(unittest.TestCase):
         token = reply['token']
 
         response = self.client.get(
-            '/api/v1/orders/1',
+            '/api/v1/parcels/1',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
 
@@ -335,7 +335,7 @@ class TestOrder(unittest.TestCase):
         )
 
         response = self.client.put(
-            '/api/v1/orders/1/destination',
+            '/api/v1/parcels/1/destination',
             content_type='application/json',
             data=json.dumps(order),
             headers={'Authorization': 'Bearer {}'.format(token)}
@@ -366,7 +366,7 @@ class TestOrder(unittest.TestCase):
         )
 
         response = self.client.put(
-            '/api/v1/orders/xx/destination',
+            '/api/v1/parcels/xx/destination',
             content_type='application/json',
             data=json.dumps(order),
             headers={'Authorization': 'Bearer {}'.format(token)}
@@ -398,7 +398,7 @@ class TestOrder(unittest.TestCase):
         )
 
         response = self.client.put(
-            'api/v1/orders/xx/PresentLocation',
+            'api/v1/parcels/xx/PresentLocation',
             content_type='application/json',
             data=json.dumps(order),
             headers={'Authorization': 'Bearer {}'.format(token)}
@@ -430,7 +430,7 @@ class TestOrder(unittest.TestCase):
         )
 
         response = self.client.put(
-            'api/v1/orders/1/PresentLocation',
+            'api/v1/parcels/1/PresentLocation',
             content_type='application/json',
             data=json.dumps(order),
             headers={'Authorization': 'Bearer {}'.format(token)}
@@ -462,7 +462,7 @@ class TestOrder(unittest.TestCase):
         )
 
         response = self.client.put(
-            '/api/v1/orders/8/destination',
+            '/api/v1/parcels/8/destination',
             content_type='application/json',
             data=json.dumps(order),
             headers={'Authorization': 'Bearer {}'.format(token)}
@@ -488,7 +488,7 @@ class TestOrder(unittest.TestCase):
             present_location='Namanve'
         )
         response = self.client.put(
-            '/api/v1/orders/1/destination',
+            '/api/v1/parcels/1/destination',
             content_type='application/json',
             data=json.dumps(order),
             headers={'Authorization': 'Bearer {}'.format(token)}
@@ -509,7 +509,7 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(response.status_code, 503)
 
         response = self.client.put(
-            '/api/v1/orders/1',
+            '/api/v1/parcels/1',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
 
