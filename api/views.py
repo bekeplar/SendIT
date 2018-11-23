@@ -119,8 +119,7 @@ def login():
                 'message': 'Enter a valid password.'
             }), 400
         user = db.login(name)
-        current_user = dict(name=name, role=user[4])
-        access_token = create_access_token(identity=current_user,
+        access_token = create_access_token(identity=name,
         expires_delta=datetime.timedelta(minutes=2880))
         return jsonify({
             'token': access_token,
