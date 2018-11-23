@@ -33,16 +33,16 @@ SendIT is a courier service that helps users deliver parcels to different destin
 
 HTTP Method|Endpoint|Functionality
 -----------|--------|-------------
-POST|api/v1/orders|Create a parcel
-GET|api/v1/orders|Fetch all parcel orders
-GET|api/v1/orders|Fetch a specific parcel order
-PUT|api/v1/orders/<int:id>|Cancel a specific parcel order
+POST|api/v1/parcels|Create a parcel
+GET|api/v1/parcels|Fetch all parcel orders
+GET|api/v1/parcels|Fetch a specific parcel order
+PUT|api/v1/parcels/<int:id>|Cancel a specific parcel order
 GET|api/v1/users/<int:id>|Fetch all parcels by userid
 POST|api/auth/login|Login a user
 POST|api/auth/signup|create a user
-PUT|api/v1/orders/<parcelId>/status|Change the status of a specific parcel
-PUT|api/v1/orders/<parcelId>/destination|Change the location of a specific parcel
-PUT|api/v1/orders/<parcelId>/PresentLocation|Change the present location parcel
+PUT|api/v1/parcels/<parcelId>/status|Change the status of a specific parcel
+PUT|api/v1/parcels/<parcelId>/destination|Change the location of a specific parcel
+PUT|api/v1/parcels/<parcelId>/PresentLocation|Change the present location parcel
 
 
 

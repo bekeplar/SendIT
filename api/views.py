@@ -2,8 +2,11 @@ from flask import Flask, request, jsonify, Blueprint
 import datetime
 import re
 from database.db import DatabaseConnection
+from flasgger import swag_from
 from api.models import Order, User
-from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
+from flask_jwt_extended import(create_access_token,
+JWTManager, jwt_required, get_jwt_identity
+)
 from werkzeug.security import generate_password_hash
 
 blueprint = Blueprint('application', __name__)
@@ -17,7 +20,7 @@ def home():
                 'message': 'Welcome to my SendIT web.'
             }), 200
 
-
+@swag_from('docs/signup.yml')
 @blueprint.route('/auth/signup', methods=['POST'])
 def signup():
     try:
@@ -28,7 +31,11 @@ def signup():
         email = data.get('email')
         password = data.get('password')
         password_hash = generate_password_hash(password, method='sha256')
-
+        keys = ('name', 'email', 'password')
+        if not set(keys).issubset(set(data)):
+            return jsonify({
+                'message': 'Missing input fields!.'
+                }), 400
         if not name or name.isspace() or not isinstance(
                 name, str):
             return jsonify({
@@ -41,10 +48,10 @@ def signup():
                 'message':
                 'The email must have mixed characters!'
             }), 400
-        elif len(password) < 4:
+        elif len(password) < 8:
             return jsonify({
                 'message': 
-                'Password must be at least 4 characters.'
+                'Password must be at least 8 characters.'
                 }), 400
         name_db = db.check_name(name)
         email_db = db.check_email(email)
@@ -96,7 +103,12 @@ def login():
         data = request.get_json()
 
         name = data.get('name')
-        password = data.get('password')      
+        password = data.get('password')
+        keys = ('name','password')
+        if not set(keys).issubset(set(data)):
+            return jsonify({
+                'message': 'Missing input fields!.'
+                }), 400      
         if not name or name.isspace() or not isinstance(
                 name, str):
             return jsonify({
@@ -107,7 +119,8 @@ def login():
                 'message': 'Enter a valid password.'
             }), 400
         user = db.login(name)
-        access_token = create_access_token(identity=name)
+        access_token = create_access_token(identity=name,
+        expires_delta=datetime.timedelta(minutes=2880))
         return jsonify({
             'token': access_token,
             'message':
@@ -119,7 +132,7 @@ def login():
                 }), 400
 
 
-@blueprint.route('/orders', methods=['POST'])
+@blueprint.route('/parcels', methods=['POST'])
 @jwt_required
 def create_order():
     """
@@ -128,6 +141,10 @@ def create_order():
     try:
         data = request.get_json()
         name = get_jwt_identity()
+        if name[-1] == True:
+            return jsonify({
+                'message':'Welcome to the users dashboard'
+            })
 
         destination = data.get('destination')
         Pickup_location = data.get('pickup_location')
@@ -148,7 +165,11 @@ def create_order():
             date,
             present_location
             )
-
+        keys = ('destination', 'price', 'weight', 'Pickup_location', 'name', 'status','present_location')
+        if not set(keys).issubset(set(data)):
+            return jsonify({
+                'message': 'Missing input fields!.'
+                }), 400
         if order.Valid_order() is False:
             return jsonify({
                 'message': 'Please fill all input fields!'
@@ -176,7 +197,7 @@ def create_order():
         }), 400
 
 
-@blueprint.route('/orders', methods=['GET'])
+@blueprint.route('/parcels', methods=['GET'])
 @jwt_required
 def get_all_parcels():
     """
@@ -188,14 +209,14 @@ def get_all_parcels():
     if not parcels_db:
         return jsonify({
             'message': 'You havent created any order yet!'
-        }), 400
+        }), 404
     return jsonify({
         'orders': parcels_db,
         'message': 'These are your parcels'
-    }), 201
+    }), 200
 
 
-@blueprint.route('/orders/<int:id>', methods=['GET'])
+@blueprint.route('/parcels/<int:id>', methods=['GET'])
 @jwt_required
 def get_specific_parcel(id):
     """
@@ -208,7 +229,14 @@ def get_specific_parcel(id):
     name = get_jwt_identity()
     try:
         db = DatabaseConnection()
+        parcels_db = db.fetch_all_orders
         order = db.fetch_order(id)
+        
+        if not parcels_db:
+            return jsonify({
+            'message': 'You havent created any order yet!'
+        }), 400
+
         if not order:
             return jsonify({
                 'message': 'you have no such order!'
@@ -223,7 +251,7 @@ def get_specific_parcel(id):
         }), 404
 
 
-@blueprint.route('/orders/<int:id>', methods=['PUT'])
+@blueprint.route('/parcels/<int:id>', methods=['PUT'])
 @jwt_required
 def cancel_parcel(id):
     """
@@ -245,14 +273,15 @@ def cancel_parcel(id):
             return jsonify({
                 "order": db.fetch_order(id),
                 "message": "parcel successfully cancelled!"
-                }), 201
+                }), 200
     except ValueError:
         return jsonify({
             'message': 'Please provide right inputs'
         }), 400
 
 
-@blueprint.route('/orders/<int:id>/destination', methods=['PUT'])
+
+@blueprint.route('/parcels/<int:id>/destination', methods=['PUT'])
 @jwt_required
 def new_destination(id):
     """
@@ -261,8 +290,12 @@ def new_destination(id):
     :returns:
     Return message for successful change of destination.
     """
-    data = request.get_json()['destination']
     name = get_jwt_identity()
+    if name[-1] == False:
+            return jsonify({
+                'message': 'Not authorized!'
+            }), 503
+    data = request.get_json()['destination']
     try:
 
         order = db.fetch_order(id)
@@ -275,14 +308,13 @@ def new_destination(id):
             return jsonify({
                 "order": db.fetch_order(id),
                 "message": "destination successfully changed!"
-                }), 201
+                }), 200
     except ValueError:
         return jsonify({
             'message': 'Please provide right inputs'
         }), 400
 
-
-@blueprint.route('/orders/<int:id>/PresentLocation', methods=['PUT'])
+@blueprint.route('/parcel/<int:id>/PresentLocation', methods=['PUT'])
 @jwt_required
 def new_location(id):
     """
@@ -291,22 +323,25 @@ def new_location(id):
     :returns:
     Return message for successful change of destination.
     """
-
-    data = request.get_json()['present_location']
     name = get_jwt_identity()
+    if name[-1] == False:
+            return jsonify({
+                'message': 'Not authorized!'
+            }), 503
+    data = request.get_json()['present_location']
     try:
 
         order = db.fetch_order(id)
         if not order:
             return jsonify({
                 'message': 'you have no such order!'
-            }), 404
+            }), 404     
         else:
-            order = db.update_present_location(id, data)
+            parcel = db.update_present_location(id, data)
             return jsonify({
-                "order": db.fetch_order(id),
+                "parcel": db.fetch_order(id),
                 "message": "Location successfully updated!"
-                }), 201
+                }), 200
     except ValueError:
         return jsonify({
             'message': 'Please provide right inputs'
