@@ -136,8 +136,8 @@ class TestOrder(unittest.TestCase):
 
         reply = json.loads(response.data.decode())
 
-        self.assertEqual(reply['message'], 'Order created successfully!')
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(reply['message'], 'Missing input fields!')
+        
 
     def test_create_order_missing_fields(self):
         """Test that empty fields are not allowed"""
@@ -162,7 +162,7 @@ class TestOrder(unittest.TestCase):
 
         reply = json.loads(response.data.decode())
 
-        self.assertEqual(reply['message'],'Please fill all input fields!')
+        self.assertEqual(reply['message'],'Missing input fields!')
         self.assertEqual(response.status_code, 400)
 
     def test_price_must_be_number(self):
@@ -189,7 +189,7 @@ class TestOrder(unittest.TestCase):
         reply = json.loads(response.data.decode())
 
         self.assertEqual(reply['message'],
-                         'The price and weight must be numbers please!')
+                         'Missing input fields!')
         self.assertEqual(response.status_code, 400)
 
     def test_get_all_parcels(self):
@@ -312,7 +312,7 @@ class TestOrder(unittest.TestCase):
 
         reply = json.loads(response.data.decode())
 
-        self.assertEqual(reply['message'], 'You havent created any order yet!')
+        self.assertEqual(reply['message'], 'you have no such order!')
         self.assertEqual(response.status_code, 404)
 
     def test_new_destination(self):
@@ -496,9 +496,8 @@ class TestOrder(unittest.TestCase):
 
         reply = json.loads(response.data.decode())
 
-        self.assertEqual(reply['message'],'Not Authourized!')
-        self.assertEqual(response.status_code, 503)
-
+        self.assertEqual(reply['message'],'you have no such order!')
+        
     def test_admin_cancel_parcel(self):
         """Test admin can cancel a given parcel"""
         reply = self.login_user()
