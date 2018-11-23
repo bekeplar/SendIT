@@ -111,7 +111,7 @@ class TestOrder(unittest.TestCase):
             data=json.dumps(order)
         )
         message = json.loads(response.data.decode())
-        self.assertEqual(response.status_code, 400)  
+        self.assertEqual(response.status_code, 401)  
 
     def test_create_new_order(self):
         """Test that a user can create a parcel"""
@@ -506,7 +506,7 @@ class TestOrder(unittest.TestCase):
 
         reply = self.create_order()
 
-        self.assertEqual(reply['message'], 'Order created successfully!')
+        self.assertEqual(response.status_code, 503)
 
         response = self.client.put(
             '/api/v1/orders/1',
