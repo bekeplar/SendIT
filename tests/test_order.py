@@ -213,8 +213,8 @@ class TestOrder(unittest.TestCase):
         )
 
         reply = json.loads(response.data.decode())
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(reply['message'], 'These are your parcels.')
+        self.assertEqual(response.status_code, 404)
+        
 
     def test_get_all_parcels_from_empty_list(self):
         """Test that a user cannot get parcel records from an empty list"""
@@ -254,7 +254,7 @@ class TestOrder(unittest.TestCase):
         reply = json.loads(response.data.decode())
 
         self.assertEqual(reply['message'], 'you have no such order!')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 404)
 
     def test_get_specific_parcel_which_does_exist(self):
         """Test that a user cannot view  a non existing parcel"""
@@ -548,6 +548,28 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(reply['message'], 'you have no such order!')
         self.assertEqual(response.status_code, 400)
 
+    def test_update_destination_which_does_not_exist(self):
+        """Test that user cannot update destination of parcel not exist"""
+        reply = self.login_user()
+        token = reply['token']
+
+        order = dict(
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=80000,
+            weight=75,
+            name='Bekalaze',
+            present_location='Namanve'
+        )
+        response = self.client.put(
+            '/api/v1/parcels/8',
+            headers={'Authorization': 'Bearer {}'.format(token)}
+        )
+
+        reply = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 404)
+
     def test_cancel_parcel_with_vague_id(self):
         """Test that user cannot cancel a parcel with an invalid id"""
         reply = self.login_user()
@@ -569,8 +591,7 @@ class TestOrder(unittest.TestCase):
 
         reply = json.loads(response.data.decode())
 
-        self.assertEqual(reply['message'],
-                         'Order id must be a number!')
+        self.assertEqual(reply['message'], 'Order id must be a number!')
         self.assertEqual(response.status_code, 400)
 
     def tearDown(self):
