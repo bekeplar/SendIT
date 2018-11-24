@@ -30,8 +30,8 @@ class TestOrder(unittest.TestCase):
             destination='Mukono',
             date='23-11-2018',
             Pickup_location='Nakawa',
-            price=80000,
-            weight=75,
+            price='xxc',
+            weight='nnn',
             name='Bekalaze',
             present_location='Namanve'
         )
@@ -279,15 +279,15 @@ class TestOrder(unittest.TestCase):
         token = reply['token']
 
         self.assertEqual(reply['message'], 'Bekalaze has logged in.')
-         order = dict(
-            destination='Mukono',
-            date='23-11-2018',
-            Pickup_location='Nakawa',
-            price=80000,
-            weight=75,
-            name='Bekalaze',
-            present_location='Namanve'
-        )
+        order = dict(
+        destination='Mukono',
+        date='23-11-2018',
+        Pickup_location='Nakawa',
+        price=80000,
+        weight=75,
+        name='Bekalaze',
+        present_location='Namanve'
+    )
 
         response = self.client.get(
             '/api/v1/parcels/xxx1',
