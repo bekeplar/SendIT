@@ -325,7 +325,7 @@ class TestOrder(unittest.TestCase):
 
         self.assertEqual(reply['message'], 'Order created successfully!')
 
-        test_new_destination = dict(
+        new_destination = dict(
             destination='Kayunga'
         )
 
@@ -378,10 +378,6 @@ class TestOrder(unittest.TestCase):
         reply = self.login_user()
         token = reply['token']
 
-        reply = self.create_order()
-
-        self.assertEqual(reply['message'], 'order created successfully!')
-
         order = dict(
             destination='Mukono',
             date='23-11-2018',
@@ -390,6 +386,9 @@ class TestOrder(unittest.TestCase):
             weight=75,
             name='Bekalaze',
             present_location='Namanve'
+        )
+        new_destination = dict(
+            destination='kabalagala'
         )
 
         response = self.client.put(
@@ -401,18 +400,13 @@ class TestOrder(unittest.TestCase):
 
         reply = json.loads(response.data.decode())
 
-        self.assertEqual(reply['message'],
-                         'Location successfully updated!')
+        self.assertEqual(reply['message'],'Location successfully updated!')
         self.assertEqual(response.status_code, 201)
 
     def test_update_destination_of_non_existing(self):
         """Test that admin cannot update empty list"""
         reply = self.login_user()
         token = reply['token']
-
-        reply = self.create_order()
-
-        self.assertEqual(reply['message'], 'Order created successfully!')
 
         order = dict(
             destination='Mukono',
@@ -451,7 +445,7 @@ class TestOrder(unittest.TestCase):
             present_location='Namanve'
         )
         response = self.client.put(
-            '/api/v1/parcels/1/destination',
+            '/api/v1/parcels/rr/destination',
             content_type='application/json',
             data=json.dumps(order),
             headers={'Authorization': 'Bearer {}'.format(token)}
