@@ -575,6 +575,5 @@ class TestOrder(unittest.TestCase):
 
     def tearDown(self):
         self.client = app.test_client(self)
-        self.db = DatabaseConnection()  
-        
+        self.db = DatabaseConnection()    
 
