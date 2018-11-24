@@ -192,6 +192,34 @@ class TestOrder(unittest.TestCase):
                          'Missing input fields!.')
         self.assertEqual(response.status_code, 400)
 
+    def test_weight_must_be_number(self):
+        """Test that a price must be a number"""
+        reply = self.login_user()
+        token = reply['token']
+
+        order = dict(
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=80000,
+            weight='nnn',
+            name='Bekalaze',
+            present_location='Namanve'
+        )
+        response = self.client.post(
+            '/api/v1/parcels',
+            content_type='application/json',
+            data=json.dumps(order),
+            headers={'Authorization': 'Bearer {}'.format(token)}
+        )
+
+        reply = json.loads(response.data.decode())
+
+        self.assertEqual(reply['message'],
+                         'Missing input fields!.')
+        self.assertEqual(response.status_code, 400)
+
+
     def test_get_all_parcels(self):
         """Test that a user can view all parcel his/her parcels."""
         reply = self.login_user()
