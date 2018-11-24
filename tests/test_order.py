@@ -342,8 +342,6 @@ class TestOrder(unittest.TestCase):
         )
 
         reply = json.loads(response.data.decode())
-
-        self.assertEqual(reply['message'], 'you have no such order!')
         self.assertEqual(response.status_code, 404)
 
     def tearDown(self):
