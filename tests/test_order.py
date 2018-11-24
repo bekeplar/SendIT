@@ -288,7 +288,7 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(reply['message'], 'you have no such order!')
         self.assertEqual(response.status_code, 404)
 
-        def test_new__location_from_empty_list(self):
+    def test_new__location_from_empty_list(self):
         """Test that a user cannot view a parcel from an empty list"""
         reply = self.login_user()
 
