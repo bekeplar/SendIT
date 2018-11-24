@@ -207,7 +207,7 @@ class TestOrder(unittest.TestCase):
             present_location='Namanve'
         )
 
-        response = self.tester.get(
+        response = self.client.get(
             '/api/v1/parcels',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
@@ -253,7 +253,7 @@ class TestOrder(unittest.TestCase):
 
         reply = json.loads(response.data.decode())
 
-        self.assertEqual(reply['message'], 'parcel successfully found!')
+        self.assertEqual(reply['message'], 'you have no such order!')
         self.assertEqual(response.status_code, 200)
 
     def test_get_specific_parcel_which_does_exist(self):
@@ -466,9 +466,15 @@ class TestOrder(unittest.TestCase):
         reply = self.login_user()
         token = reply['token']
 
-        reply = self.create_order()
-
-        self.assertEqual(response.status_code, 503)
+        order = dict(
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=80000,
+            weight=75,
+            name='Bekalaze',
+            present_location='Namanve'
+        )
 
         response = self.client.put(
             '/api/v1/parcels/1',
@@ -484,7 +490,15 @@ class TestOrder(unittest.TestCase):
         """Testing if should a user not be able to cancel a parcel"""
         reply = self.login_user()
         token = reply['token']
-
+        order = dict(
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=80000,
+            weight=75,
+            name='Bekalaze',
+            present_location='Namanve'
+        )
         response = self.client.put(
             '/api/v1/parcels/1',
             headers={'Authorization': 'Bearer {}'.format(token)}
@@ -492,8 +506,7 @@ class TestOrder(unittest.TestCase):
 
         reply = json.loads(response.data.decode())
 
-        self.assertEqual(reply['message'],
-                         'Not Authorized!')
+        self.assertEqual(reply['message'], 'parcel successfully cancelled!')
         self.assertEqual(response.status_code, 503)
 
     def test_cancel_parcel_from_empty_list(self):
@@ -508,8 +521,7 @@ class TestOrder(unittest.TestCase):
 
         reply = json.loads(response.data.decode())
 
-        self.assertEqual(reply['message'],
-                         'You havent created any order yet!')
+        self.assertEqual(reply['message'], 'You havent created any order yet!')
         self.assertEqual(response.status_code, 400)
 
     def test_cancel_parcel_which_does_not_exist(self):
@@ -517,11 +529,16 @@ class TestOrder(unittest.TestCase):
         reply = self.login_user()
         token = reply['token']
 
-        reply = self.create_order()
-
-        self.assertEqual(reply['message'], 'Order created successfully!')
-
-        response = self.client.delete(
+        order = dict(
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=80000,
+            weight=75,
+            name='Bekalaze',
+            present_location='Namanve'
+        )
+        response = self.client.put(
             '/api/v1/parcels/8',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
@@ -536,10 +553,15 @@ class TestOrder(unittest.TestCase):
         reply = self.login_user()
         token = reply['token']
 
-        reply = self.create_order()
-
-        self.assertEqual(reply.status_code, 400)
-
+        order = dict(
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=80000,
+            weight=75,
+            name='Bekalaze',
+            present_location='Namanve'
+        )
         response = self.client.put(
             '/api/v1/parcels/xxx',
             headers={'Authorization': 'Bearer {}'.format(token)}
