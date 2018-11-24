@@ -292,68 +292,6 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(reply['message'], 'you have no such order!')
         self.assertEqual(response.status_code, 404)
 
-    def test_update_location_with_invalid_id(self):
-        """Test admin cannot change location with vague id"""
-        reply = self.login_user()
-        token = reply['token']
-
-        reply = self.create_order()
-
-        self.assertEqual(reply['message'], 'Order created successfully!')
-
-        new_product = dict(
-            destination='Mukono',
-            date='23-11-2018',
-            Pickup_location='Nakawa',
-            price=80000,
-            weight=75,
-            name='Bekalaze',
-            present_location='Namanve'
-        )
-
-        response = self.client.put(
-            'api/v1/parcels/xx/PresentLocation',
-            content_type='application/json',
-            data=json.dumps(order),
-            headers={'Authorization': 'Bearer {}'.format(token)}
-        )
-
-        reply = json.loads(response.data.decode())
-
-        self.assertEqual(reply['message'],
-                         'Order id must be a number!')
-        self.assertEqual(response.status_code, 400)
-
-    def test_new_location(self):
-        """Test user can update location of parcel"""
-        reply = self.login_user()
-        token = reply['token']
-
-        order = dict(
-            destination='Mukono',
-            date='23-11-2018',
-            Pickup_location='Nakawa',
-            price=80000,
-            weight=75,
-            name='Bekalaze',
-            present_location='Namanve'
-        )
-        new_destination = dict(
-            destination='kabalagala'
-        )
-
-        response = self.client.put(
-            'api/v1/parcels/1/PresentLocation',
-            content_type='application/json',
-            data=json.dumps(order),
-            headers={'Authorization': 'Bearer {}'.format(token)}
-        )
-
-        reply = json.loads(response.data.decode())
-
-        self.assertEqual(reply['message'],'Location successfully updated!')
-        self.assertEqual(response.status_code, 201)
-
     def test_update_destination_of_non_existing(self):
         """Test that admin cannot update empty list"""
         reply = self.login_user()
@@ -381,21 +319,6 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(reply['message'], 'you have no such order!')
         self.assertEqual(response.status_code, 404)
 
-    def test_cancel_parcel_from_empty_list(self):
-        """Test that a user cannot cancel a parcel from empty list """
-        reply = self.login_user()
-        token = reply['token']
-
-        response = self.client.put(
-            '/api/v1/parcels/3',
-            headers={'Authorization': 'Bearer {}'.format(token)}
-        )
-
-        reply = json.loads(response.data.decode())
-
-        self.assertEqual(reply['message'], 'You havent created any order yet!')
-        self.assertEqual(response.status_code, 400)
-    
     def tearDown(self):
         self.client = app.test_client(self)
         self.db = DatabaseConnection()    
