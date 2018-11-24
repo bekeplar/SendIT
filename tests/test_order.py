@@ -320,31 +320,31 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_update_location_of_non_existing(self):
-    """Test that admin cannot update empty list"""
-    reply = self.login_user()
-    token = reply['token']
+        """Test that admin cannot update empty list"""
+        reply = self.login_user()
+        token = reply['token']
 
-    order = dict(
-        destination='Mukono',
-        date='23-11-2018',
-        Pickup_location='Nakawa',
-        price=80000,
-        weight=75,
-        name='Bekalaze',
-        present_location='Namanve'
-    )
+        order = dict(
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=80000,
+            weight=75,
+            name='Bekalaze',
+            present_location='Namanve'
+        )
 
-    response = self.client.put(
-        '/api/v1/parcels/8/PresentLocation',
-        content_type='application/json',
-        data=json.dumps(order),
-        headers={'Authorization': 'Bearer {}'.format(token)}
-    )
+        response = self.client.put(
+            '/api/v1/parcels/8/PresentLocation',
+            content_type='application/json',
+            data=json.dumps(order),
+            headers={'Authorization': 'Bearer {}'.format(token)}
+        )
 
-    reply = json.loads(response.data.decode())
+        reply = json.loads(response.data.decode())
 
-    self.assertEqual(reply['message'], 'you have no such order!')
-    self.assertEqual(response.status_code, 404)
+        self.assertEqual(reply['message'], 'you have no such order!')
+        self.assertEqual(response.status_code, 404)
 
     def tearDown(self):
         self.client = app.test_client(self)
