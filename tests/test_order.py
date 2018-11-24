@@ -290,11 +290,9 @@ class TestOrder(unittest.TestCase):
             '/api/v1/parcels/xxx1',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
-
         reply = json.loads(response.data.decode())
 
-        self.assertEqual(reply['message'],
-                         'Order id must be a number!')
+        self.assertEqual(reply['message'], 'Order id must be a number!')
         self.assertEqual(response.status_code, 400)
 
     def test_get_specific_order_from_empty_list(self):
@@ -345,38 +343,6 @@ class TestOrder(unittest.TestCase):
 
         self.assertEqual(reply['message'], 'destination successfully updated!')
         self.assertEqual(response.status_code, 201)
-
-    def test_new_destination_with_vague_ids(self):
-        """Test that a user cannot update parcel destination with non-integer ids"""
-        reply = self.login_user()
-        token = reply['token']
-
-        reply = self.create_order()
-
-        self.assertEqual(reply['message'], 'Order created successfully!')
-
-        order = dict(
-            destination='Mukono',
-            date='23-11-2018',
-            Pickup_location='Nakawa',
-            price=80000,
-            weight=75,
-            name='Bekalaze',
-            present_location='Namanve'
-        )
-
-        response = self.client.put(
-            '/api/v1/parcels/xx/destination',
-            content_type='application/json',
-            data=json.dumps(order),
-            headers={'Authorization': 'Bearer {}'.format(token)}
-        )
-
-        reply = json.loads(response.data.decode())
-
-        self.assertEqual(
-            reply['message'],'Order id must be a number!')
-        self.assertEqual(response.status_code, 400)
 
     def test_update_location_with_invalid_id(self):
         """Test admin cannot change location with vague id"""
