@@ -300,7 +300,7 @@ class TestOrder(unittest.TestCase):
         )
 
         reply = json.dumps(response.data.decode())
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 500)
 
     def test_new_destination_order_from_empty_list(self):
         """Test that a user cannot view a parcel from an empty list"""
@@ -315,7 +315,7 @@ class TestOrder(unittest.TestCase):
         )
 
         reply = json.dumps(response.data.decode())
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 500)
 
     def test_get_order_from_empty_list(self):
         """Test that a user cannot view a parcel from an empty list"""
