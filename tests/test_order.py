@@ -299,7 +299,7 @@ class TestOrder(unittest.TestCase):
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
 
-        reply = json.loads(response.data.decode())
+        reply = json.dumps(response.data.decode())
 
         self.assertEqual(reply['message'], 'you have no such order!')
         self.assertEqual(response.status_code, 404)
@@ -316,7 +316,7 @@ class TestOrder(unittest.TestCase):
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
 
-        reply = json.loads(response.data.decode())
+        reply = json.dumps(response.data.decode())
 
         self.assertEqual(reply['message'], 'you have no such order!')
         self.assertEqual(response.status_code, 404)
