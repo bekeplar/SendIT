@@ -300,8 +300,6 @@ class TestOrder(unittest.TestCase):
         )
 
         reply = json.dumps(response.data.decode())
-
-        self.assertEqual(reply['message'], 'you have no such order!')
         self.assertEqual(response.status_code, 404)
 
     def test_new_destination_order_from_empty_list(self):
@@ -317,8 +315,6 @@ class TestOrder(unittest.TestCase):
         )
 
         reply = json.dumps(response.data.decode())
-
-        self.assertEqual(reply['message'], 'you have no such order!')
         self.assertEqual(response.status_code, 404)
 
     def test_get_order_from_empty_list(self):
