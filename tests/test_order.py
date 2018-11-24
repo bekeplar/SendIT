@@ -30,8 +30,8 @@ class TestOrder(unittest.TestCase):
             destination='Mukono',
             date='23-11-2018',
             Pickup_location='Nakawa',
-            price='xxc',
-            weight='nnn',
+            price=80000,
+            weight=75,
             name='Bekalaze',
             present_location='Namanve'
         )
@@ -197,9 +197,6 @@ class TestOrder(unittest.TestCase):
         reply = self.login_user()
         token = reply['token']
 
-        reply = self.create_order()
-
-        self.assertEqual(reply['message'], 'Order created successfully!')
         order = dict(
             destination='Mukono',
             date='23-11-2018',
@@ -239,9 +236,6 @@ class TestOrder(unittest.TestCase):
         reply = self.login_user()
         token = reply['token']
 
-        reply = self.create_order()
-
-        self.assertEqual(reply['message'], 'order created successfully!')
         order = dict(
             destination='Mukono',
             date='23-11-2018',
@@ -285,6 +279,15 @@ class TestOrder(unittest.TestCase):
         token = reply['token']
 
         self.assertEqual(reply['message'], 'Bekalaze has logged in.')
+         order = dict(
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=80000,
+            weight=75,
+            name='Bekalaze',
+            present_location='Namanve'
+        )
 
         response = self.client.get(
             '/api/v1/parcels/xxx1',
@@ -320,16 +323,10 @@ class TestOrder(unittest.TestCase):
 
         reply = self.create_order()
 
-        self.assertEqual(reply['message'], 'Product added successfully!')
+        self.assertEqual(reply['message'], 'Order created successfully!')
 
-        order = dict(
-            destination='Mukono',
-            date='23-11-2018',
-            Pickup_location='Nakawa',
-            price=80000,
-            weight=75,
-            name='Bekalaze',
-            present_location='Namanve'
+        test_new_destination = dict(
+            destination='Kayunga'
         )
 
         response = self.client.put(
