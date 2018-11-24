@@ -235,7 +235,6 @@ class TestOrder(unittest.TestCase):
         """Test that user can view a given parcel by id"""
         reply = self.login_user()
         token = reply['token']
-
         order = dict(
             destination='Mukono',
             date='23-11-2018',
@@ -245,7 +244,6 @@ class TestOrder(unittest.TestCase):
             name='Bekalaze',
             present_location='Namanve'
         )
-
         response = self.client.get(
             '/api/v1/parcels/1',
             headers={'Authorization': 'Bearer {}'.format(token)}
@@ -267,7 +265,6 @@ class TestOrder(unittest.TestCase):
             '/api/v1/parcels/2',
             headers={'Authorization': 'Bearer {}'.format(token)}
         )
-
         reply = json.loads(response.data.decode())
 
         self.assertEqual(reply['message'], 'you have no such order!')
@@ -279,7 +276,6 @@ class TestOrder(unittest.TestCase):
         reply = self.login_user()
 
         self.assertEqual(reply['message'], 'Bekalaze has logged in.')
-
         token = reply['token']
 
         response = self.client.get(
