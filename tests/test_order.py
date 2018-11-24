@@ -317,6 +317,21 @@ class TestOrder(unittest.TestCase):
         reply = json.dumps(response.data.decode())
         self.assertEqual(response.status_code, 500)
 
+    def test_cancel_parcel_from_empty_list(self):
+        """Test that a user cannot view a parcel from an empty list"""
+        reply = self.login_user()
+
+        self.assertEqual(reply['message'], 'Bekalaze has logged in.')
+        token = reply['token']
+
+        response = self.client.put(
+            '/api/v1/parcels/1',
+            headers={'Authorization': 'Bearer {}'.format(token)}
+        )
+
+        reply = json.dumps(response.data.decode())
+        self.assertEqual(response.status_code, 500)    
+
     def test_get_order_from_empty_list(self):
         """Test that a user cannot view a parcel from an empty list"""
         reply = self.login_user()
