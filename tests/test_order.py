@@ -288,6 +288,40 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(reply['message'], 'you have no such order!')
         self.assertEqual(response.status_code, 404)
 
+        def test_new__location_from_empty_list(self):
+        """Test that a user cannot view a parcel from an empty list"""
+        reply = self.login_user()
+
+        self.assertEqual(reply['message'], 'Bekalaze has logged in.')
+        token = reply['token']
+
+        response = self.client.put(
+            '/api/v1/parcels/1',
+            headers={'Authorization': 'Bearer {}'.format(token)}
+        )
+
+        reply = json.loads(response.data.decode())
+
+        self.assertEqual(reply['message'], 'you have no such order!')
+        self.assertEqual(response.status_code, 404)
+
+    def test_new_destination_order_from_empty_list(self):
+        """Test that a user cannot view a parcel from an empty list"""
+        reply = self.login_user()
+
+        self.assertEqual(reply['message'], 'Bekalaze has logged in.')
+        token = reply['token']
+
+        response = self.client.put(
+            '/api/v1/parcels/1',
+            headers={'Authorization': 'Bearer {}'.format(token)}
+        )
+
+        reply = json.loads(response.data.decode())
+
+        self.assertEqual(reply['message'], 'you have no such order!')
+        self.assertEqual(response.status_code, 404)
+
     def test_get_order_from_empty_list(self):
         """Test that a user cannot view a parcel from an empty list"""
         reply = self.login_user()
