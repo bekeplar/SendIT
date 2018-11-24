@@ -165,6 +165,137 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(reply['message'],'Missing input fields!.')
         self.assertEqual(response.status_code, 400)
 
+    def test_create_order_missing_weight(self):
+        """Test that empty fields are not allowed"""
+        reply = self.login_user()
+        token = reply['token']
+
+        order = dict(
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=70000,
+            weight='',
+            name='Bekalaze',
+            present_location='Namanve'
+        )
+        response = self.client.post(
+            '/api/v1/parcels',
+            content_type='application/json',
+            data=json.dumps(order),
+            headers={'Authorization': 'Bearer {}'.format(token)}
+        )
+
+        reply = json.loads(response.data.decode())
+
+        self.assertEqual(reply['message'],'Missing input fields!.')
+        self.assertEqual(response.status_code, 400)
+
+    def test_create_order_missing_present_location(self):
+        """Test that empty fields are not allowed"""
+        reply = self.login_user()
+        token = reply['token']
+
+        order = dict(
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=70000,
+            weight=85,
+            name='Bekalaze',
+            present_location=''
+        )
+        response = self.client.post(
+            '/api/v1/parcels',
+            content_type='application/json',
+            data=json.dumps(order),
+            headers={'Authorization': 'Bearer {}'.format(token)}
+        )
+
+        reply = json.loads(response.data.decode())
+
+        self.assertEqual(reply['message'],'Missing input fields!.')
+        self.assertEqual(response.status_code, 400)    
+
+    def test_create_order_missing_name(self):
+        """Test that empty fields are not allowed"""
+        reply = self.login_user()
+        token = reply['token']
+
+        order = dict(
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=70000,
+            weight=85,
+            name='',
+            present_location='Namanve'
+        )
+        response = self.client.post(
+            '/api/v1/parcels',
+            content_type='application/json',
+            data=json.dumps(order),
+            headers={'Authorization': 'Bearer {}'.format(token)}
+        )
+
+        reply = json.loads(response.data.decode())
+
+        self.assertEqual(reply['message'],'Missing input fields!.')
+        self.assertEqual(response.status_code, 400)
+
+    def test_create_order_missing_pickup_location(self):
+        """Test that empty fields are not allowed"""
+        reply = self.login_user()
+        token = reply['token']
+
+        order = dict(
+            destination='Mukono',
+            date='23-11-2018',
+            Pickup_location='',
+            price=70000,
+            weight=85,
+            name='Bekalaze',
+            present_location='Namanve'
+        )
+        response = self.client.post(
+            '/api/v1/parcels',
+            content_type='application/json',
+            data=json.dumps(order),
+            headers={'Authorization': 'Bearer {}'.format(token)}
+        )
+
+        reply = json.loads(response.data.decode())
+
+        self.assertEqual(reply['message'],'Missing input fields!.')
+        self.assertEqual(response.status_code, 400)    
+
+    def test_create_order_missing_destination(self):
+        """Test that empty fields are not allowed"""
+        reply = self.login_user()
+        token = reply['token']
+
+        order = dict(
+            destination='',
+            date='23-11-2018',
+            Pickup_location='Nakawa',
+            price=70000,
+            weight=85,
+            name='Bekalaze',
+            present_location='Namanve'
+        )
+        response = self.client.post(
+            '/api/v1/parcels',
+            content_type='application/json',
+            data=json.dumps(order),
+            headers={'Authorization': 'Bearer {}'.format(token)}
+        )
+
+        reply = json.loads(response.data.decode())
+
+        self.assertEqual(reply['message'],'Missing input fields!.')
+        self.assertEqual(response.status_code, 400)
+
+
     def test_price_must_be_number(self):
         """Test that a price must be a number"""
         reply = self.login_user()
